@@ -3,21 +3,25 @@
 #include <time.h>
 int tmp;
 
+//짧은글 연습
 void s_sentence()
 {
 
 }
 
+//긴글 연습
 void l_sentence()
 {
 
 }
 
+//낱말 연습
 void word()
 {
 
 }
 
+//자리
 void place()
 {
 
