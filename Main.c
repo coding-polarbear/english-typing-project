@@ -24,8 +24,9 @@ void word()
 //자리
 void place()
 { 
+  printf("진행도:%d",);
+
   char arr1[52];
-  
   for(int i=0; i<26;i++)
   {
 	arr1[i]=65+i;
@@ -35,6 +36,7 @@ void place()
 	arr1[j]=97+j;
   }
   
+
   
   
 }
