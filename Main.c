@@ -3,7 +3,7 @@
 #include <time.h>
 int tmp;
 
-//짧은글 연습
+//짧은글 연습g
 void s_sentence()
 {
 
