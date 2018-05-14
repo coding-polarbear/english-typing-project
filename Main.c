@@ -32,7 +32,7 @@ int main()
 	int menu;
 	printf("                       영어 타자 연습              \n");
 	printf("	1. 자리수 연습                    2. 낱말 연습\n");
-	printf("	3. 짧은글 연습       			 4. 긴글 연습\n");
+	printf("	3. 짧은글 연습       			  4. 긴글 연습\n");
 	
 	scanf("%d", &menu);
 	switch(menu)
