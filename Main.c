@@ -48,7 +48,6 @@ void place()
 while (1) {
 	if (cnt==20)
 		exit(0);
-
 	else 
 		break;
 	}
