@@ -23,8 +23,20 @@ void word()
 
 //자리
 void place()
-{
-
+{ 
+  char arr1[52];
+  
+  for(int i=0; i<26;i++)
+  {
+	arr1[i]=65+i;
+  }
+  for(int j=27; j<52;j++)
+  {
+	arr1[j]=97+j;
+  }
+  
+  
+  
 }
 
 int main()
