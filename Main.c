@@ -7,12 +7,27 @@ int tmp;
 void s_sentence()
 {
 	char tmp[50] = ("Poetry is the mother tongue of mankind");
-	int s_prosess = 0, s_livetype = 0, s_besttype = 0, s_acc = 0;
+	char typer, typing_storge[200];
+	int s_prosess = 0, s_livetype = 0, s_besttype = 0, s_acc = 0; // 진행도, 타수, 최고타수, 정확도
 
-	printf("짧은 글 연습\n");
-	printf("진행도: %d 현재타수: %d 최고타수: %d 정확도: %d \n\n", s_prosess, s_livetype, s_besttype, s_acc);
-	printf("%s", tmp);
-	get
+	while (s_prosess != 100)
+	{
+		printf("짧은 글 연습\n");
+		printf("진행도: %d 현재타수: %d 최고타수: %d 정확도: %d \n\n", s_prosess, s_livetype, s_besttype, s_acc);
+		printf("%s\n", tmp);
+		printf("%s", typing_storge);
+
+		typer = getch();
+		if(typer == 13)
+		{
+			break;
+		}
+		else
+		{
+			system("clear");
+			typing_storge + typer;
+		}
+	}
 }
 
 void l_sentence()
@@ -35,7 +50,7 @@ int main()
 	int menu;
 	printf("                 영어 타자 연습               \n");
 	printf("1. 자리수 연습                    2. 낱말 연습\n");
-	printf("3. 짧은글 연습       			  4. 긴글 연습\n");
+	printf("3. 짧은글 연습                    4. 긴글 연습\n");
 	
 	scanf("%d", &menu);
 	switch(menu)
