@@ -4,6 +4,18 @@
 #include "conio.h"
 int tmp;
 
+void Init()
+{
+}
+
+void Update()
+{
+}
+
+void Render()
+{
+}
+
 //짧은글 연습g
 void s_sentence()
 {
@@ -21,7 +33,7 @@ void s_sentence()
 		typer = getch();
 		if(typer == 13)
 		{
-			break;
+			;
 		}
 		else
 		{
@@ -43,7 +55,7 @@ void word()
 
 }
 
-//자리
+//자수 연습
 void place()
 { 
   printf("진행도:%d",);
