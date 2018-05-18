@@ -1,7 +1,28 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "conio.h"
+#include <termios.h>
+static struct termios old, new;
+void initTermios(int echo)
+{
+  tcgetattr(0, &old); new = old;
+  new.c_lflag &= ~ICANON;
+  if (echo) {
+      new.c_lflag |= ECHO;
+  } else {
+      new.c_lflag &= ~ECHO;
+  }tcsetattr(0, TCSANOW, &new);
+}void resetTermios(void)
+{
+  tcsetattr(0, TCSANOW, &old);
+}char getch_(int echo){
+  char ch;  initTermios(echo);
+  ch = getchar();resetTermios();
+  return ch;
+}
+char getche(void){
+  return getch_(1);
+}//위의 것들은 getche를 linux환경에서 헤더없이 구현하기위해 삽입.
 int tmp;
 
 //짧은글 연습g
@@ -18,7 +39,7 @@ void s_sentence()
 		printf("%s\n", tmp);
 		printf("%s", typing_storge);
 
-		typer = getch();
+		typer = getche();
 		if(typer == 13)
 		{
 			break;
@@ -45,18 +66,31 @@ void word()
 
 //자리
 void place()
-{ 
-  printf("진행도:%d",);
-
-  char arr1[52];
+{  
+  float process ,error,exact =0;
+  int count=0;
+  printf("자리연습 \n");
+  printf("진행도:%d  오타수:%d  정확도:%d ",process,error,exact);
+  printf("\n\n");
+    
+  char alphabet[53];
   for(int i=0; i<26;i++)
   {
-	arr1[i]=65+i;
+	alphabet[i]=65+i;
   }
-  for(int j=27; j<52;j++)
+  for(int j=0; j<26;j++)
   {
-	arr1[j]=97+j;
+	alphabet[26+j]=97+j;
   }
+  while(count<=20)
+  {
+	  
+  }
+  
+  srand(time(NULL));
+  printf("%c",alphabet[rand()%52]);
+  
+  
   
 
   
