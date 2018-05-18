@@ -25,6 +25,18 @@ char getche(void){
 }//위의 것들은 getche를 linux환경에서 헤더없이 구현하기위해 삽입.
 int tmp;
 
+void Init()
+{
+}
+
+void Update()
+{
+}
+
+void Render()
+{
+}
+
 //짧은글 연습g
 void s_sentence()
 {
@@ -42,7 +54,7 @@ void s_sentence()
 		typer = getche();
 		if(typer == 13)
 		{
-			break;
+			;
 		}
 		else
 		{
@@ -64,7 +76,7 @@ void word()
 
 }
 
-//자리
+//자수 연습
 void place()
 {  
   float process ,error,exact =0;
