@@ -35,12 +35,17 @@ void Update(char tmp[], char typing_storge[], int s_prosess, int s_livetype, int
 	 printf("짧은 글 연습\n");
 	 printf("\n");
 		printf("진행도: %d 현재타수: %d 최고타수: %d 정확도: %d \n\n", s_prosess, s_livetype, s_besttype, s_acc);
-		printf("%s", tmp);
+		printf("%s\n", tmp);
 		printf("%s", typing_storge);
 }
 
-void Render()
+void Render(char tmp[], char title[], int s_prosess, int s_livetype, int s_besttype, int s_acc)
 {
+	system("clear");
+	printf("%s\n", title);
+	 printf("\n");
+		printf("진행도: %d 현재타수: %d 최고타수: %d 정확도: %d \n\n", s_prosess, s_livetype, s_besttype, s_acc);
+		printf("%s\n", tmp);
 }
 
 //짧은글 연습g
@@ -49,29 +54,33 @@ void s_sentence()
 	char tmp[50] = ("Poetry is the mother tongue of mankind");
 	char typer, typing_storge[200];
 	int s_prosess = 0, s_livetype = 0, s_besttype = 0, s_acc = 0; // 진행도, 타수, 최고타수, 정확도
-	int index = 0;
+	int index = -1;
+	Render(tmp, "짧은 글 연습", index, s_livetype,s_besttype, s_acc);
 	while (s_prosess != 100)
 	{
-		Update(tmp, typing_storge, s_prosess, s_livetype, s_besttype, s_acc);
 		typer = getche();
 		if(typer == 13)
 		{
 			;
 		}
 		else if(typer == 127 || typer == 8) {
-			if(index >= 0) {
+			if(index > 0) {
 			index--;
 			typing_storge[index] = '\0';
-			printf("\n\b");
-			Update(tmp, typing_storge, s_prosess, s_livetype, s_besttype, s_acc);
+			// printf("\n\b");
+			Update(tmp, typing_storge, index, s_livetype, s_besttype, s_acc);
 			} else {
-				printf("\x1B[A");
+				index = 0;
+				// printf("\x1B[A");
+							Render(tmp, "짧은 글 연습", index, s_livetype, s_besttype, s_acc);
+							continue;
+
 			}
 		}
 		else {
 			typing_storge[index] = typer;
 			index++;
-			Update(tmp, typing_storge, s_prosess, s_livetype, s_besttype, s_acc);
+			Update(tmp, typing_storge, index, s_livetype, s_besttype, s_acc);
 		}
 	}
 }
