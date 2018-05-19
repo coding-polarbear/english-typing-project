@@ -35,7 +35,7 @@ void Update(char tmp[], char typing_storge[], int s_prosess, int s_livetype, int
 	 printf("짧은 글 연습\n");
 	 printf("\n");
 		printf("진행도: %d 현재타수: %d 최고타수: %d 정확도: %d \n\n", s_prosess, s_livetype, s_besttype, s_acc);
-		printf("%s\n", tmp);
+		printf("%s", tmp);
 		printf("%s", typing_storge);
 }
 
@@ -65,7 +65,7 @@ void s_sentence()
 			printf("\n\b");
 			Update(tmp, typing_storge, s_prosess, s_livetype, s_besttype, s_acc);
 			} else {
-
+				printf("\x1B[A");
 			}
 		}
 		else {
