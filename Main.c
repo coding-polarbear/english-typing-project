@@ -29,8 +29,14 @@ void Init()
 {
 }
 
-void Update()
+void Update(char tmp[], char typing_storge[], int s_prosess, int s_livetype, int s_besttype, int s_acc) 
 {
+	system("clear");
+	 printf("짧은 글 연습\n");
+	 printf("\n");
+		printf("진행도: %d 현재타수: %d 최고타수: %d 정확도: %d \n\n", s_prosess, s_livetype, s_besttype, s_acc);
+		printf("%s\n", tmp);
+		printf("%s", typing_storge);
 }
 
 void Render()
@@ -43,23 +49,29 @@ void s_sentence()
 	char tmp[50] = ("Poetry is the mother tongue of mankind");
 	char typer, typing_storge[200];
 	int s_prosess = 0, s_livetype = 0, s_besttype = 0, s_acc = 0; // 진행도, 타수, 최고타수, 정확도
-
+	int index = 0;
 	while (s_prosess != 100)
 	{
-		printf("짧은 글 연습\n");
-		printf("진행도: %d 현재타수: %d 최고타수: %d 정확도: %d \n\n", s_prosess, s_livetype, s_besttype, s_acc);
-		printf("%s\n", tmp);
-		printf("%s", typing_storge);
-
+		Update(tmp, typing_storge, s_prosess, s_livetype, s_besttype, s_acc);
 		typer = getche();
 		if(typer == 13)
 		{
 			;
 		}
-		else
-		{
-			system("clear");
-			typing_storge + typer;
+		else if(typer == 127 || typer == 8) {
+			if(index >= 0) {
+			index--;
+			typing_storge[index] = '\0';
+			printf("\n\b");
+			Update(tmp, typing_storge, s_prosess, s_livetype, s_besttype, s_acc);
+			} else {
+
+			}
+		}
+		else {
+			typing_storge[index] = typer;
+			index++;
+			Update(tmp, typing_storge, s_prosess, s_livetype, s_besttype, s_acc);
 		}
 	}
 }
