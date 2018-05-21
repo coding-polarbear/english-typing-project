@@ -48,6 +48,17 @@ void Render(char tmp[], char title[], int s_prosess, int s_livetype, int s_bestt
 		printf("%s\n", tmp);
 }
 
+void placeword(char tmp[], char title[], int s_process, int s_wrong, float s_acc)
+{
+	int typer;
+	system("clear");
+	printf("%s\n", title);
+	 printf("\n");
+		printf("진행도 : %d%%	오타수: %d	정확도 : %.2f%%\n\n", s_process,s_wrong, s_acc);
+		printf("%s\n", tmp);
+		typer = getche();
+}
+
 //짧은글 연습g
 void s_sentence()
 {
@@ -94,44 +105,53 @@ void l_sentence()
 //낱말 연습
 void word()
 {
-	int s_progress = 0, s_wrong = 0, s_acc = 0;
-	int i,j,k,cnt;
+	char tmp[100][100]={
+"about","all","also","and" "as","at","be","because","but","by"
+"can","come","could","day","do","even","find","first","for","from",
+"get","give","go","have","he","her","here","him","his","how"
+"I","if","in","into","it","its","just","know","like","look",
+"make","man","many","me","more","my","new","no","not","now",
+"of","on","one","only","or","other","our","out","people","say",
+"see","she","so","some","take","tell","than","that","the","their"
+"them","then","there","these","they","thing","think","this","those","time"
+"to","two","up","use","very","want","way","we","well","what",
+"when","which","who","will","with","would","year","you","your","zebra"};
+srand(time(NULL));
+int s_process=0, s_wrong=0, total=0;
+float s_acc=0;
+int i,j,k,cnt,typer;
+s_acc = (float)cnt/total*100;
 
-	srand(time(NULL));
-	char words[20][20]={"about", "apple", "april","as","at", 
-	"come","find","for","get","have",
-	"know","like","look","no","not"
-	"man","woman","more","my","make"};
-	char typing_storage[100], tmp;
+placeword(tmp, "단어 연습",s_process,s_wrong,s_acc);
 
-	while (s_progress!=20){
-		printf("단어 연습\n");
-		printf("진행도 : %d%%, 오타수 : %d	정확도 : %d%%\n",s_progress,s_wrong,s_acc);
-		k = rand()%20;
-		printf("\n\n");
+printf("\n\n");
 
-		printf("%s\n", words);
+typer = getche();
 
-		for(int i=0; words[i]!='\0';i++){
-			scanf("%s",typing_storage);
-			getche();
-		
-		}
+while(s_process!=20){
+	total++;
+	for (i=0;i<=20;i++)
+	{
+		tmp[i]=rand()%100;
+		printf("%s\n",tmp);
+	}
 
-		for(int j=0;j<i+1;j++){
-			if(!strcmp(words,typing_storage)){
-				s_progress+=5;
-				continue;
-			}
+	if(!strcmp(tmp,typer)){
+	s_process+=5;
+	s_acc;
+	continue;
+	}
+	else {
+		while(strcmp(tmp,typer)==1){
+		s_wrong++;
+		s_acc;
+		system("clear");
+		placeword(tmp, "단어 연습",s_process,s_wrong,s_acc);	
+	}
+cnt++;
+}
 
-			else{
-				s_wrong++;
-				continue;
-				
-			} 	
-		}
-	};
-
+}
 }
 
 
