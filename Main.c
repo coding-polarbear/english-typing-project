@@ -95,19 +95,18 @@ void l_sentence()
 void word()
 {
 	int s_progress = 0, s_wrong = 0, s_acc = 0;
-	int k;
+	int i,j,k,cnt;
 
-	srand(unsigned)time(NULL));
+	srand(time(NULL));
 	char words[20][20]={"about", "apple", "april","as","at", 
 	"come","find","for","get","have",
 	"know","like","look","no","not"
-	"man","woman","more","my","make"}
+	"man","woman","more","my","make"};
 	char typing_storage[100], tmp;
 
 	while (s_progress!=20){
 		printf("단어 연습\n");
-		printf("진행도 : %d%,		오타수 : %d		정확도 : %d%\n
-		s_progress,s_wrong,s_acc");
+		printf("진행도 : %d%%, 오타수 : %d	정확도 : %d%%\n",s_progress,s_wrong,s_acc);
 		k = rand()%20;
 		printf("\n\n");
 
@@ -131,21 +130,28 @@ void word()
 				
 			} 	
 		}
-	}
-return 0;
-}
+	};
 
 }
+
+
 
 //자수 연습
 void place()
 {  
-  float process ,error,exact =0;
+  float exact =0;
+  int error=-1,process=0;
   int count=0;
-  printf("자리연습 \n");
-  printf("진행도:%d  오타수:%d  정확도:%d ",process,error,exact);
-  printf("\n\n");
-    
+	int totalchallenge=0;
+  char putalphabet;
+
+  while(count<=20)
+ {
+   system("clear");
+	 printf ("자리연습 \n");
+   printf("진행도:%d%%  오타수:%d  정확도:%.1f%% ",process,error,exact);
+   printf("\n\n");
+
   char alphabet[53];
   for(int i=0; i<26;i++)
   {
@@ -155,20 +161,51 @@ void place()
   {
 	alphabet[26+j]=97+j;
   }
-  while(count<=20)
-  {
-	  
+
+	char put;
+	srand(time(NULL));
+  totalchallenge++;
+  putalphabet=alphabet[rand()%52];
+
+  printf("%c",putalphabet);
+  printf("\n");
+
+  put=getche();
+	if(put==putalphabet)
+	{
+   count++;
+   process+=5;
+     exact=(float)count/totalchallenge*100;
+	}
+	else
+	{
+      while(put!=putalphabet)
+      {
+        error++;
+        totalchallenge++;
+        exact=(float)count/totalchallenge*100;
+        system("clear");
+     	  printf ("자리연습 \n");
+        printf("진행도:%d%%  오타수:%d  정확도:%.1f%% ",process,error,exact);
+        printf("\n\n");
+        printf("%c\n",putalphabet);
+        put=getche();
+      }
+      count++;
   }
-  
-  srand(time(NULL));
-  printf("%c",alphabet[rand()%52]);
+
+ exact=(float)count/totalchallenge*100;
+ }
+
+ 
+}
   
   
   
 
   
   
-}
+
 
 int main()
 {
