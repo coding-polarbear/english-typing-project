@@ -94,6 +94,46 @@ void l_sentence()
 //낱말 연습
 void word()
 {
+	int s_progress = 0, s_wrong = 0, s_acc = 0;
+	int k;
+
+	srand(unsigned)time(NULL));
+	char words[20][20]={"about", "apple", "april","as","at", 
+	"come","find","for","get","have",
+	"know","like","look","no","not"
+	"man","woman","more","my","make"}
+	char typing_storage[100], tmp;
+
+	while (s_progress!=20){
+		printf("단어 연습\n");
+		printf("진행도 : %d%,		오타수 : %d		정확도 : %d%\n
+		s_progress,s_wrong,s_acc");
+		k = rand()%20;
+		printf("\n\n");
+
+		printf("%s\n", words);
+
+		for(int i=0; words[i]!='\0';i++){
+			scanf("%s",typing_storage);
+			getche();
+		
+		}
+
+		for(int j=0;j<i+1;j++){
+			if(!strcmp(words,typing_storage)){
+				s_progress+=5;
+				continue;
+			}
+
+			else{
+				s_wrong++;
+				continue;
+				
+			} 	
+		}
+	}
+return 0;
+}
 
 }
 
