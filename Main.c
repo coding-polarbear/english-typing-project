@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <termios.h>
+
 static struct termios old, new;
 void initTermios(int echo)
 {
@@ -62,7 +63,23 @@ void placeword(char tmp[], char title[], int s_process, int s_wrong, float s_acc
 //짧은글 연습g
 void s_sentence()
 {
-	char tmp[50] = ("Poetry is the mother tongue of mankind");
+	char tmp[40][200] = ([["Poetry is the mother tongue of mankind"], ["Where there is a will there is a way."],
+	["Think of the end before you begin."], ["Carpe Diem!"],
+	["boys, be ambitious!"], ["Raise your head!"],
+	["Try hard, Try hard!"], ["Ability is decided by one's own effort."],
+	["Faithfulness makes all things possible."], ["Do to others as you would be done by."],
+	["Faith without deeds is useless."], ["The life is only once."],
+	["Think different!"], ["The regret after not doing something is bigger than that of doing something."],
+	["Try your best rather than be the best."], ["I determine my future all by myself."],
+	["All I need to do is move forward!"], ["I must do what I want to do."],
+	["Have fun this time, because it will never come again."], ["My dream don't have forgotten the promise I had until now!!"],
+	["Time is life itself."], ["If  you don't walk today, you will have to run tomorrow."],
+	["Why do you make efforts commonly, don't want to live commonly!"], ["Today, which was proved to be fruitless, is the day that the dead in the past was longing for."],
+	["Never put off for tommorrow what you can do today!"], ["The real effort never betrays me."],
+	["There is no Destiny."], ["Effort is the best way to realizing your dreams."],
+	["No pain, no gain."], ["Opportunity seldom knocks twice."],
+	["Make hay while the sun shines."]]);
+
 	char typer, typing_storge[200];
 	int s_prosess = 0, s_livetype = 0, s_besttype = 0, s_acc = 0; // 진행도, 타수, 최고타수, 정확도
 	int index = -1;
@@ -132,8 +149,8 @@ while(s_process!=20){
 	total++;
 	for (i=0;i<=20;i++)
 	{
-		tmp[i]=rand()%100;
-		printf("%s\n",tmp);
+		int x =rand()%100;
+		printf("%s\n",tmp[x]);
 	}
 
 	if(!strcmp(tmp,typer)){
