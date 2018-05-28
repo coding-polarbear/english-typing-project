@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 #include <termios.h>
 #include<unistd.h>
@@ -55,10 +56,9 @@ void placeword(char tmp[], char title[], int s_process, int s_wrong, float s_acc
 	int typer;
 	system("clear");
 	printf("%s\n", title);
-	 printf("\n");
-		printf("진행도 : %d%%	오타수: %d	정확도 : %.2f%%\n\n", s_process,s_wrong, s_acc);
-		printf("%s\n", tmp);
-		typer = getche();
+	printf("\n");
+	printf("진행도 : %d%%	오타수: %d	정확도 : %.2f%%\n\n", s_process,s_wrong, s_acc);
+	printf("%s\n", tmp);
 }
 
 //짧은글 연습g
@@ -100,10 +100,8 @@ void s_sentence()
 			Update(tmp, typing_storge, index, s_livetype, s_besttype, s_acc);
 			} else {
 				index = 0;
-				// printf("\x1B[A");
-							Render(tmp, "짧은 글 연습", index, s_livetype, s_besttype, s_acc);
-							continue;
-
+				Render(tmp, "짧은 글 연습", index, s_livetype, s_besttype, s_acc);
+				continue;
 			}
 		}
 		else {
@@ -123,54 +121,45 @@ void l_sentence()
 //낱말 연습
 void word()
 {
+	srand(time(NULL));
 	char tmp[100][100]={
-"about","all","also","and" "as","at","be","because","but","by"
-"can","come","could","day","do","even","find","first","for","from",
-"get","give","go","have","he","her","here","him","his","how"
-"I","if","in","into","it","its","just","know","like","look",
-"make","man","many","me","more","my","new","no","not","now",
-"of","on","one","only","or","other","our","out","people","say",
-"see","she","so","some","take","tell","than","that","the","their"
-"them","then","there","these","they","thing","think","this","those","time"
-"to","two","up","use","very","want","way","we","well","what",
-"when","which","who","will","with","would","year","you","your","zebra"};
-srand(time(NULL));
-int s_process=0, s_wrong=0, total=0;
-float s_acc=0;
-int i,j,k,cnt,typer;
-s_acc = (float)cnt/total*100;
+		"about","all","also","and" "as","at","be","because","but","by",
+		"can","come","could","day","do","even","find","first","for","from",
+		"get","give","go","have","he","her","here","him","his","how"
+		"I","if","in","into","it","its","just","know","like","look",
+		"make","man","many","me","more","my","new","no","not","now",
+		"of","on","one","only","or","other","our","out","people","say",
+		"see","she","so","some","take","tell","than","that","the","their",
+		"them","then","there","these","they","thing","think","this","those","time",
+		"to","two","up","use","very","want","way","we","well","what",
+		"when","which","who","will","with","would","year","you","your","zebra"};
 
-placeword(tmp, "단어 연습",s_process,s_wrong,s_acc);
+	int s_process=0, s_wrong=0, cnt =1;
+	float s_acc=100;
+	int x; 
+	char typer[]={0};
 
-printf("\n\n");
+	printf("\n\n");
 
-typer = getche();
+	while(cnt!=20){
+			x = rand()%100;
+		placeword(tmp[x], "단어 연습",s_process,s_wrong,s_acc);
+		scanf("%s", typer);
 
-while(s_process!=20){
-	total++;
-	for (i=0;i<=20;i++)
-	{
-		int x =rand()%100;
-		printf("%s\n",tmp[x]);
+		if(strcmp(tmp[x],typer) == 0){
+			s_process+=5;
+			continue;
+		} else {
+			s_process+=5;
+			s_wrong++;
+		}
+		cnt++;
+		s_acc=100-(float)s_wrong/20*100;
 	}
-
-	if(!strcmp(tmp,typer)){
-	s_process+=5;
-	s_acc;
-	continue;
-	}
-	else {
-		while(strcmp(tmp,typer)==1){
-		s_wrong++;
-		s_acc;
-		system("clear");
-		placeword(tmp, "단어 연습",s_process,s_wrong,s_acc);	
-	}
-cnt++;
+	system("clear");
+	placeword(tmp, "단어 연습",s_process,s_wrong,s_acc);
 }
 
-}
-}
 
 
 
@@ -250,7 +239,6 @@ void place()
 }
   
   
-  
 
   
   
@@ -259,9 +247,9 @@ void place()
 int main()
 {
 	int menu;
-	printf("                       영어 타자 연습              \n");
-	printf("	1. 자리수 연습                    2. 낱말 연습\n");
-	printf("	3. 짧은글 연습       			  4. 긴글 연습\n");
+	printf("	   ;>>영어 타자 연습<<		\n");
+	printf("1. 자리수 연습		2. 낱말 연습\n");
+	printf("3. 짧은글 연습		4. 긴글 연습\n");
 	
 	scanf("%d", &menu);
 	getchar();
@@ -270,15 +258,19 @@ int main()
 		case 1:
 			system("clear");
 			place();
+			break;
 		case 2:
 			system("clear");
 			word();
+			break;
 		case 3:
 			system("clear");
 			s_sentence();
+			break;
 		case 4:
 			system("clear");
 			l_sentence();
+			break;
 	}
 	return 0;
 }
