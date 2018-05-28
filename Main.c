@@ -105,6 +105,7 @@ void l_sentence()
 //낱말 연습
 void word()
 {
+	srand(time(NULL));
 	char tmp[100][100]={
 "about","all","also","and" "as","at","be","because","but","by"
 "can","come","could","day","do","even","find","first","for","from",
@@ -116,43 +117,40 @@ void word()
 "them","then","there","these","they","thing","think","this","those","time"
 "to","two","up","use","very","want","way","we","well","what",
 "when","which","who","will","with","would","year","you","your","zebra"};
-srand(time(NULL));
-int s_process=0, s_wrong=0, total=0;
+
+int s_process=0, s_wrong=0, cnt =0;
 float s_acc=0;
-int i,j,k,cnt,typer;
-s_acc = (float)cnt/total*100;
+char x, typer;
+x = rand()%100;
 
 placeword(tmp, "단어 연습",s_process,s_wrong,s_acc);
 
 printf("\n\n");
 
-typer = getche();
+printf("---------");
 
-while(s_process!=20){
-	total++;
-	for (i=0;i<=20;i++)
-	{
-		tmp[i]=rand()%100;
-		printf("%s\n",tmp);
-	}
-
-	if(!strcmp(tmp,typer)){
+while(cnt!=20){
+	printf("%s\ngc",x);
+	typer = getchar();
+	putchar(typer);
+	
+	if(!strcmp(x,typer)){
 	s_process+=5;
-	s_acc;
+	s_acc = (float)cnt/20*100;
 	continue;
 	}
 	else {
-		while(strcmp(tmp,typer)==1){
+		s_process+=5;
 		s_wrong++;
-		s_acc;
-		system("clear");
-		placeword(tmp, "단어 연습",s_process,s_wrong,s_acc);	
+		s_acc = (float)cnt/20*100;
 	}
 cnt++;
-}
+}	
+system("clear");
+placeword(tmp, "단어 연습",s_process,s_wrong,s_acc);	
 
 }
-}
+
 
 
 
@@ -230,9 +228,9 @@ void place()
 int main()
 {
 	int menu;
-	printf("                       영어 타자 연습              \n");
-	printf("	1. 자리수 연습                    2. 낱말 연습\n");
-	printf("	3. 짧은글 연습       			  4. 긴글 연습\n");
+	printf("	   ;>>영어 타자 연습<<		\n");
+	printf("1. 자리수 연습		2. 낱말 연습\n");
+	printf("3. 짧은글 연습		4. 긴글 연습\n");
 	
 	scanf("%d", &menu);
 	switch(menu)
