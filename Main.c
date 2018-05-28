@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include <termios.h>
+
 static struct termios old, new;
 void initTermios(int echo)
 {
@@ -62,7 +63,23 @@ void placeword(char tmp[], char title[], int s_process, int s_wrong, float s_acc
 //짧은글 연습g
 void s_sentence()
 {
-	char tmp[50] = ("Poetry is the mother tongue of mankind");
+	char tmp[40][200] = ([["Poetry is the mother tongue of mankind"], ["Where there is a will there is a way."],
+	["Think of the end before you begin."], ["Carpe Diem!"],
+	["boys, be ambitious!"], ["Raise your head!"],
+	["Try hard, Try hard!"], ["Ability is decided by one's own effort."],
+	["Faithfulness makes all things possible."], ["Do to others as you would be done by."],
+	["Faith without deeds is useless."], ["The life is only once."],
+	["Think different!"], ["The regret after not doing something is bigger than that of doing something."],
+	["Try your best rather than be the best."], ["I determine my future all by myself."],
+	["All I need to do is move forward!"], ["I must do what I want to do."],
+	["Have fun this time, because it will never come again."], ["My dream don't have forgotten the promise I had until now!!"],
+	["Time is life itself."], ["If  you don't walk today, you will have to run tomorrow."],
+	["Why do you make efforts commonly, don't want to live commonly!"], ["Today, which was proved to be fruitless, is the day that the dead in the past was longing for."],
+	["Never put off for tommorrow what you can do today!"], ["The real effort never betrays me."],
+	["There is no Destiny."], ["Effort is the best way to realizing your dreams."],
+	["No pain, no gain."], ["Opportunity seldom knocks twice."],
+	["Make hay while the sun shines."]]);
+
 	char typer, typing_storge[200];
 	int s_prosess = 0, s_livetype = 0, s_besttype = 0, s_acc = 0; // 진행도, 타수, 최고타수, 정확도
 	int index = -1;
@@ -105,6 +122,7 @@ void word()
 {
 	srand(time(NULL));
 	char tmp[100][100]={
+<<<<<<< HEAD
 		"about","all","also","and" "as","at","be","because","but","by",
 		"can","come","could","day","do","even","find","first","for","from",
 		"get","give","go","have","he","her","here","him","his","how"
@@ -138,6 +156,49 @@ void word()
 		}
 		cnt++;
 		s_acc=100-(float)s_wrong/20*100;
+=======
+"about","all","also","and" "as","at","be","because","but","by"
+"can","come","could","day","do","even","find","first","for","from",
+"get","give","go","have","he","her","here","him","his","how"
+"I","if","in","into","it","its","just","know","like","look",
+"make","man","many","me","more","my","new","no","not","now",
+"of","on","one","only","or","other","our","out","people","say",
+"see","she","so","some","take","tell","than","that","the","their"
+"them","then","there","these","they","thing","think","this","those","time"
+"to","two","up","use","very","want","way","we","well","what",
+"when","which","who","will","with","would","year","you","your","zebra"};
+srand(time(NULL));
+int s_process=0, s_wrong=0, total=0;
+float s_acc=0;
+int i,j,k,cnt,typer;
+s_acc = (float)cnt/total*100;
+
+placeword(tmp, "단어 연습",s_process,s_wrong,s_acc);
+
+printf("\n\n");
+
+typer = getche();
+
+while(s_process!=20){
+	total++;
+	for (i=0;i<=20;i++)
+	{
+		int x =rand()%100;
+		printf("%s\n",tmp[x]);
+	}
+
+	if(!strcmp(tmp,typer)){
+	s_process+=5;
+	s_acc;
+	continue;
+	}
+	else {
+		while(strcmp(tmp,typer)==1){
+		s_wrong++;
+		s_acc;
+		system("clear");
+		placeword(tmp, "단어 연습",s_process,s_wrong,s_acc);	
+>>>>>>> 564b65f5eae79c9d40a112916a7203b1993c2e07
 	}
 	system("clear");
 	placeword(tmp, "단어 연습",s_process,s_wrong,s_acc);
