@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <termios.h>
+#include<unistd.h>
 
 static struct termios old, new;
 void initTermios(int echo)
@@ -89,7 +90,7 @@ void s_sentence()
 		typer = getche();
 		if(typer == 13)
 		{
-			;
+			
 		}
 		else if(typer == 127 || typer == 8) {
 			if(index > 0) {
@@ -176,13 +177,15 @@ cnt++;
 //자수 연습
 void place()
 {  
+  
+
   float exact =0;
-  int error=-1,process=0;
+  int error,process=0;
   int count=0;
 	int totalchallenge=0;
   char putalphabet;
 
-  while(count<=20)
+  while(count<20)
  {
    system("clear");
 	 printf ("자리연습 \n");
@@ -207,7 +210,7 @@ void place()
   printf("%c",putalphabet);
   printf("\n");
 
-  put=getche();
+  put=mygetch();
 	if(put==putalphabet)
 	{
    count++;
@@ -226,15 +229,24 @@ void place()
         printf("진행도:%d%%  오타수:%d  정확도:%.1f%% ",process,error,exact);
         printf("\n\n");
         printf("%c\n",putalphabet);
-        put=getche();
+        put=mygetch();
       }
       count++;
+      process+=5;
   }
 
  exact=(float)count/totalchallenge*100;
  }
+ if(count==20)
+ {
+   system("clear");
+   printf ("자리연습 \n");
+   printf("진행도:%d%%  오타수:%d  정확도:%.1f%% ",process,error,exact);
+ }
 
- 
+ return 0 ;
+
+
 }
   
   
@@ -252,6 +264,7 @@ int main()
 	printf("	3. 짧은글 연습       			  4. 긴글 연습\n");
 	
 	scanf("%d", &menu);
+	getchar();
 	switch(menu)
 	{
 		case 1:
