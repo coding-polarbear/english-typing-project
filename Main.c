@@ -131,12 +131,10 @@ void word()
 
 		if(strcmp(tmp[x],typer) == 0){
 			s_process+=5;
-			//s_acc = (float)cnt/20*100;
 			continue;
 		} else {
 			s_process+=5;
 			s_wrong++;
-			//s_acc = 100 -  (float)cnt/20*100;
 		}
 		cnt++;
 		s_acc=100-(float)s_wrong/20*100;
