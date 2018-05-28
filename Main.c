@@ -143,7 +143,6 @@ void word()
 	char typer[]={0};
 
 	printf("\n\n");
-	printf("---------");
 
 	while(cnt!=20){
 		x = rand()%100;
