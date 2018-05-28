@@ -122,7 +122,6 @@ void word()
 {
 	srand(time(NULL));
 	char tmp[100][100]={
-<<<<<<< HEAD
 		"about","all","also","and" "as","at","be","because","but","by",
 		"can","come","could","day","do","even","find","first","for","from",
 		"get","give","go","have","he","her","here","him","his","how"
@@ -156,49 +155,6 @@ void word()
 		}
 		cnt++;
 		s_acc=100-(float)s_wrong/20*100;
-=======
-"about","all","also","and" "as","at","be","because","but","by"
-"can","come","could","day","do","even","find","first","for","from",
-"get","give","go","have","he","her","here","him","his","how"
-"I","if","in","into","it","its","just","know","like","look",
-"make","man","many","me","more","my","new","no","not","now",
-"of","on","one","only","or","other","our","out","people","say",
-"see","she","so","some","take","tell","than","that","the","their"
-"them","then","there","these","they","thing","think","this","those","time"
-"to","two","up","use","very","want","way","we","well","what",
-"when","which","who","will","with","would","year","you","your","zebra"};
-srand(time(NULL));
-int s_process=0, s_wrong=0, total=0;
-float s_acc=0;
-int i,j,k,cnt,typer;
-s_acc = (float)cnt/total*100;
-
-placeword(tmp, "단어 연습",s_process,s_wrong,s_acc);
-
-printf("\n\n");
-
-typer = getche();
-
-while(s_process!=20){
-	total++;
-	for (i=0;i<=20;i++)
-	{
-		int x =rand()%100;
-		printf("%s\n",tmp[x]);
-	}
-
-	if(!strcmp(tmp,typer)){
-	s_process+=5;
-	s_acc;
-	continue;
-	}
-	else {
-		while(strcmp(tmp,typer)==1){
-		s_wrong++;
-		s_acc;
-		system("clear");
-		placeword(tmp, "단어 연습",s_process,s_wrong,s_acc);	
->>>>>>> 564b65f5eae79c9d40a112916a7203b1993c2e07
 	}
 	system("clear");
 	placeword(tmp, "단어 연습",s_process,s_wrong,s_acc);
