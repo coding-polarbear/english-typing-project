@@ -13,7 +13,8 @@ void initTermios(int echo)
       new.c_lflag |= ECHO;
   } else {
       new.c_lflag &= ~ECHO;
-  }tcsetattr(0, TCSANOW, &new);
+  }
+  tcsetattr(0, TCSANOW, &new);
 }
 
 void resetTermios(void)
@@ -106,8 +107,7 @@ void s_sentence()
 				Render(tmp, "짧은 글 연습", index, s_livetype, s_besttype, s_acc);
 				continue;
 			}
-		}
-		else {
+		} else {
 			typing_storge[index] = typer;
 			index++;
 			Update(tmp, typing_storge, index, s_livetype, s_besttype, s_acc, index);
@@ -146,7 +146,7 @@ void word()
 	printf("---------");
 
 	while(cnt!=20){
-			x = rand()%100;
+		x = rand()%100;
 		placeword(tmp[x], "단어 연습",s_process,s_wrong,s_acc);
 		scanf("%s", typer);
 
@@ -170,72 +170,60 @@ void word()
 //자수 연습
 void place()
 {  
-  float exact =0;
-  int error=-1,process=0;
-  int count=0;
-int totalchallenge=0;
-  char putalphabet;
-
-  while(count<=20)
-  {
-	  system("clear");
-	  printf ("자리연습 \n");
-	  printf("진행도:%d%%  오타수:%d  정확도:%.1f%% ",process,error,exact);
-	  printf("\n\n");
-
-	char alphabet[53];
-	for(int i=0; i<26;i++)
+	float exact =0;
+	int error=-1, process=0;
+	int count=0;
+	int totalchallenge=0;
+	char putalphabet;
+	
+	while(count<=20)
 	{
-		alphabet[i]=65+i;
-	}
-	for(int j=0; j<26;j++)
-  {
-	alphabet[26+j]=97+j;
-  }
+		system("clear");
+	  	printf ("자리연습 \n");
+	  	printf("진행도:%d%%  오타수:%d  정확도:%.1f%% ",process,error,exact);
+	  	printf("\n\n");
 
-	char put;
-	srand(time(NULL));
-  totalchallenge++;
-  putalphabet=alphabet[rand()%52];
+		char alphabet[53];
+		for(int i=0; i<26;i++)
+		{
+			alphabet[i]=65+i;
+		}
+		for(int j=0; j<26;j++)
+		{
+			alphabet[26+j]=97+j;
+		}
 
-  printf("%c",putalphabet);
-  printf("\n");
+		char put;
+		srand(time(NULL));
+		totalchallenge++;
+		putalphabet=alphabet[rand()%52];
 
-  put=getche();
-	if(put==putalphabet)
-	{
-   count++;
-   process+=5;
-     exact=(float)count/totalchallenge*100;
-	}
-	else
-	{
-      while(put!=putalphabet)
-      {
-        error++;
-        totalchallenge++;
-        exact=(float)count/totalchallenge*100;
-        system("clear");
-     	  printf ("자리연습 \n");
-        printf("진행도:%d%%  오타수:%d  정확도:%.1f%% ",process,error,exact);
-        printf("\n\n");
-        printf("%c\n",putalphabet);
-        put=getche();
-      }
-      count++;
-  }
+		printf("%c",putalphabet);
+		printf("\n");
 
- exact=(float)count/totalchallenge*100;
- }
-
- 
+  		put=getche();
+		if(put==putalphabet) {
+			count++;
+   			process+=5;
+     		exact=(float)count/totalchallenge*100;
+		} else {
+      		while(put!=putalphabet)
+			{
+				error++;
+				totalchallenge++;
+				exact=(float)count/totalchallenge*100;
+				system("clear");
+				printf ("자리연습 \n");
+				printf("진행도:%d%%  오타수:%d  정확도:%.1f%% ",process,error,exact);
+				printf("\n\n");
+				printf("%c\n",putalphabet);
+				put=getche();
+			}
+			count++;
+		}
+		exact=(float)count/totalchallenge*100;
+ 	}
 }
-  
-  
-
-  
-  
-
 
 int main()
 {
