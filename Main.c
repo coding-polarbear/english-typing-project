@@ -124,7 +124,7 @@ void word()
 	char tmp[100][100]={
 		"about","all","also","and" "as","at","be","because","but","by",
 		"can","come","could","day","do","even","find","first","for","from",
-		"get","give","go","have","he","her","here","him","his","how"
+		"get","give","go","have","he","her","here","him","his","how",
 		"I","if","in","into","it","its","just","know","like","look",
 		"make","man","many","me","more","my","new","no","not","now",
 		"of","on","one","only","or","other","our","out","people","say",
