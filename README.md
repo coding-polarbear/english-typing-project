@@ -1,5 +1,5 @@
 # english-typing-project
-Soongsil Univ school of software 1st semester project
+Soongsil Univ school of software 2018 1-1 project
 
 # 역할 분담
 역할 | 이름
