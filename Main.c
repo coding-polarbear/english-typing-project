@@ -5,6 +5,8 @@
 #include <termios.h>
 #include<unistd.h>
 
+void print_menu();
+
 static struct termios old, new;
 void initTermios(int echo)
 {
@@ -28,14 +30,11 @@ char getch_(int echo){
   ch = getchar();resetTermios();
   return ch;
 }
+
 char getche(void){
   return getch_(1);
 }//위의 것들은 getche를 linux환경에서 헤더없이 구현하기위해 삽입.
 int tmp;
-
-void Init()
-{
-}
 
 void Update(char tmp[], char typing_storge[], int s_prosess, int s_livetype, int s_besttype, int s_acc, int index) 
 {
@@ -119,6 +118,7 @@ void s_sentence()
 			Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, s_besttype, s_acc, index);
 		}
 	}
+	print_menu();
 }
 
 //긴글 연습
@@ -228,11 +228,13 @@ void place()
 		}
 		exact=(float)count/totalchallenge*100;
  	}
+	 print_menu();
 }
 
-int main()
+void print_menu()
 {
 	int menu;
+	system("clear");
 	printf("	   ;>>영어 타자 연습<<		\n");
 	printf("1. 자리수 연습		2. 낱말 연습\n");
 	printf("3. 짧은글 연습		4. 긴글 연습\n");
@@ -258,5 +260,10 @@ int main()
 			l_sentence();
 			break;
 	}
+}
+
+int main()
+{
+	print_menu();
 	return 0;
 }
