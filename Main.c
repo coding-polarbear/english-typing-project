@@ -107,6 +107,7 @@ void s_sentence()
 	char typer, typing_storge[200];
 	int s_prosess = 0, s_livetype = 0, s_besttype = 0, s_acc = 0; // 진행도, 타수, 최고타수, 정확도
 	int index = 0;
+	int correct = 0; //맞은개수
 	srand(time(NULL));
 	int random_choice = rand() % 30;
 	Render(tmp[random_choice], "짧은 글 연습", s_prosess, s_livetype,s_besttype, s_acc);
@@ -117,21 +118,38 @@ void s_sentence()
 		{
 			random_choice = rand() % 30;
 			index = 0;
+			correct = 0;
+			s_acc = 0;
 			s_prosess += 20;
 			Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, s_besttype, s_acc, index);
 		}
 		else if(typer == 127 || typer == 8) {
 			if(index > 0) {
+				if(tmp[random_choice][index -1] == typing_storge[index -1]) {
+					correct--;
+				}
 				index--;
+				if(index == 0) {
+					correct = 0;
+					s_acc = 0;
+				} else {
+					s_acc = ((float) correct / index) * 100;
+				}
 				Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, s_besttype, s_acc, index);
 			} else {
 				index = 0;
+				s_acc = 0;
+				correct = 0;
 				Render(tmp[random_choice], "짧은 글 연습", s_prosess, s_livetype, s_besttype, s_acc);
 				continue;
 			}
 		} else {
 			typing_storge[index] = typer;
+			if(typing_storge[index] == tmp[random_choice][index]) {
+				correct++;
+			}
 			index++;
+			s_acc = ((float) correct / index) * 100;
 			Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, s_besttype, s_acc, index);
 		}
 	}
