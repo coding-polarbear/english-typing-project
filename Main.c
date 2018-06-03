@@ -36,24 +36,26 @@ char getche(void){
 }//위의 것들은 getche를 linux환경에서 헤더없이 구현하기위해 삽입.
 int tmp;
 
-void Update(char tmp[], char typing_storge[], int s_prosess, int s_livetype, int s_besttype, int s_acc, int index) 
+double besttype = 0;
+
+void Update(char tmp[], char typing_storge[], int s_prosess, double s_livetype, double besttype, int s_acc, int index) 
 {
 	system("clear");
 	printf("짧은 글 연습\n");
 	printf("\n");
-	printf("진행도: %d 현재타수: %d 최고타수: %d 정확도: %d \n\n", s_prosess, s_livetype, s_besttype, s_acc);
+	printf("진행도: %d 현재타수: %0.f 최고타수: %0.f 정확도: %d \n\n", s_prosess, s_livetype, besttype, s_acc);
 	printf("%s\n", tmp);
 	for(int i = 0; i < index; i++) 
 		printf("%c", typing_storge[i]);
 	// printf("%s", typing_storge);
 }
 
-void Render(char tmp[], char title[], int s_prosess, int s_livetype, int s_besttype, int s_acc)
+void Render(char tmp[], char title[], int s_prosess, double s_livetype, double besttype, int s_acc)
 {
 	system("clear");
 	printf("%s\n", title);
 	printf("\n");
-	printf("진행도: %d 현재타수: %d 최고타수: %d 정확도: %d \n\n", s_prosess, s_livetype, s_besttype, s_acc);
+	printf("진행도: %d 현재타수: %0.f 최고타수: %0.f 정확도: %d \n\n", s_prosess, s_livetype, besttype, s_acc);
 	printf("%s\n", tmp);
 }
 
@@ -65,6 +67,16 @@ void placeword(char tmp[], char title[], int s_process, int s_wrong, float s_acc
 	printf("\n");
 	printf("진행도 : %d%%	오타수: %d	정확도 : %.2f%%\n\n", s_process,s_wrong, s_acc);
 	printf("%s\n", tmp);
+}
+
+double Livetype(int correct, time_t startTime, time_t endTime)
+{
+	double type =  (correct * (60 / ((double)(endTime - startTime) / 1000))); //시간에서 입력한 타자수를 곱함
+	if(type > besttype)
+	{
+		besttype = type;
+	}
+	return type;
 }
 
 //짧은글 연습g
@@ -105,14 +117,20 @@ void s_sentence()
 	};
 
 	char typer, typing_storge[200];
-	int s_prosess = 0, s_livetype = 0, s_besttype = 0, s_acc = 0; // 진행도, 타수, 최고타수, 정확도
+	int s_prosess = 0, s_acc = 0; // 진행도, 타수, 최고타수, 정확도
+	double s_livetype = 0;
 	int index = 0;
-	int correct = 0; //맞은개수
+	int correct = 0, temp; //맞은개수
+	
 	srand(time(NULL));
 	int random_choice = rand() % 30;
-	Render(tmp[random_choice], "짧은 글 연습", s_prosess, s_livetype,s_besttype, s_acc);
+	Render(tmp[random_choice], "짧은 글 연습", s_prosess, s_livetype, besttype, s_acc);
+
+	time_t startTime = 0, endTime = 0;
+	startTime = clock();
+
 	while (s_prosess != 100)
-	{	
+	{
 		typer = getche();
 		if(typer == '\n')
 		{
@@ -121,7 +139,7 @@ void s_sentence()
 			correct = 0;
 			s_acc = 0;
 			s_prosess += 20;
-			Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, s_besttype, s_acc, index);
+			Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, besttype, s_acc, index);
 		}
 		else if(typer == 127 || typer == 8) {
 			if(index > 0) {
@@ -135,12 +153,12 @@ void s_sentence()
 				} else {
 					s_acc = ((float) correct / index) * 100;
 				}
-				Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, s_besttype, s_acc, index);
+				Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, besttype, s_acc, index);
 			} else {
 				index = 0;
 				s_acc = 0;
 				correct = 0;
-				Render(tmp[random_choice], "짧은 글 연습", s_prosess, s_livetype, s_besttype, s_acc);
+				Render(tmp[random_choice], "짧은 글 연습", s_prosess, s_livetype, besttype, s_acc);
 				continue;
 			}
 		} else {
@@ -149,8 +167,10 @@ void s_sentence()
 				correct++;
 			}
 			index++;
+			endTime = clock();
+			s_livetype = Livetype(correct, startTime, endTime);
 			s_acc = ((float) correct / index) * 100;
-			Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, s_besttype, s_acc, index);
+			Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, besttype, s_acc, index);
 		}
 	}
 	print_menu();
