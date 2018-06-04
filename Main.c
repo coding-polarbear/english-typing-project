@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 #include <time.h>
 #include <termios.h>
@@ -38,13 +39,16 @@ int tmp;
 
 double besttype = 0;
 
-void Update(char tmp[], char typing_storge[], int s_prosess, double s_livetype, double besttype, int s_acc, int index) 
+void Update(char tmp[], char typing_storge[], int s_prosess, double s_livetype, double besttype, int s_acc, int index, bool is_long) 
 {
 	system("clear");
 	printf("짧은 글 연습\n");
 	printf("\n");
 	printf("진행도: %d 현재타수: %0.f 최고타수: %0.f 정확도: %d \n\n", s_prosess, s_livetype, besttype, s_acc);
 	printf("%s\n", tmp);
+	if(is_long) {
+		printf("\n");
+	}
 	for(int i = 0; i < index; i++) 
 		printf("%c", typing_storge[i]);
 	// printf("%s", typing_storge);
@@ -139,7 +143,7 @@ void s_sentence()
 			correct = 0;
 			s_acc = 0;
 			s_prosess += 20;
-			Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, besttype, s_acc, index);
+			Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, besttype, s_acc, index, false);
 		}
 		else if(typer == 127 || typer == 8) {
 			if(index > 0) {
@@ -153,7 +157,7 @@ void s_sentence()
 				} else {
 					s_acc = ((float) correct / index) * 100;
 				}
-				Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, besttype, s_acc, index);
+				Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, besttype, s_acc, index, false);
 			} else {
 				index = 0;
 				s_acc = 0;
@@ -170,7 +174,7 @@ void s_sentence()
 			endTime = clock();
 			s_livetype = Livetype(correct, startTime, endTime);
 			s_acc = ((float) correct / index) * 100;
-			Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, besttype, s_acc, index);
+			Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, besttype, s_acc, index, false);
 		}
 	}
 	print_menu();
@@ -179,7 +183,48 @@ void s_sentence()
 //긴글 연습
 void l_sentence()
 {
-	
+	char tmp [5][2][400] = {
+		{
+			"When Phil Spencer went skiing three years ago, he had no idea how much his life would change as a result.\n"
+			"I was a terrible skier.\n"
+			"I could hardly stand up!\n"
+			"says pill, now on 25.\n"
+			"On Phil's first trip down the mountain he fell and crashed into a group of people standing nearby.", 
+			
+			"He didn't know then, but they were snowborders.\n"
+			"I heared someone shouting at me\n"
+			"I looked up and there was Mika\n"
+			"I've never forgotten the time I first saw him\n"
+			"I was so angry. adds Mika\n"
+			"But when I helped him up, he gave me a beautiful smile."
+		},
+		{
+			"I'm going to talk about social networking.\n"
+			"Lots of people use sites such as Facebook and Twitter these days.\n"
+			"Using these sites can help friends and family stay in touch.\n"
+			"They are also good if you want to find any long-lost friends, and to make new ones.\n"
+			"This is especially useful for people who don't go out much, perhaps because they are old, sick, or shy.",
+
+			"abcdefg"
+		}
+	};
+	int s_process = 0;
+	int index = 0;
+	Render(tmp[1][0], "긴글연습",s_process, 0, 0, 0);
+	printf("\n");
+
+	char typing_storage[400];
+	while(s_process != 100) {
+		char typer = getche();
+		if(typer == 127 || typer == 8) {
+			index--;
+			Update(tmp[1][0], typing_storage, s_process, 0, 0, 0, index, true);
+		} else {
+			typing_storage[index] = typer;
+			index++;
+		}
+	}
+
 }
 
 //낱말 연습
