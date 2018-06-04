@@ -58,13 +58,13 @@ void Render(char tmp[], char title[], int s_prosess, int s_livetype, int s_bestt
 	printf("%s\n", tmp);
 }
 
-void placeword(char tmp[], char title[], int s_process, int s_wrong, float s_acc)
+void placeword(char tmp[], char title[], int w_process, int w_wrong, float w_acc)
 {
 	int typer;
 	system("clear");
 	printf("%s\n", title);
 	printf("\n");
-	printf("진행도 : %d%%	오타수: %d	정확도 : %.2f%%\n\n", s_process,s_wrong, s_acc);
+	printf("진행도 : %d%%	오타수: %d	정확도 : %.d%%\n\n", w_process,w_wrong, w_acc);
 	printf("%s\n", tmp);
 }
 
@@ -143,8 +143,8 @@ void word()
 		"to","two","up","use","very","want","way","we","well","what",
 		"when","which","who","will","with","would","year","you","your","zebra"};
 
-	int s_process=0, s_wrong=0, cnt =1;
-	float s_acc=100;
+	int w_process=0, w_wrong=0, cnt =1;
+	float w_acc=100;
 	int x; 
 	char typer[]={0};
 
@@ -152,20 +152,20 @@ void word()
 
 	while(cnt<=20){
 		x = rand()%100;
-		placeword(tmp[x], "단어 연습",s_process,s_wrong,s_acc);
+		placeword(tmp[x], "단어 연습",w_process,w_wrong,w_acc);
 		scanf("%s", typer);
 
 		if(strcmp(tmp[x],typer) == 0){
-			s_process+=5;
+			w_process+=5;
 		} else {
-			s_process+=5;
-			s_wrong++;
+			w_process+=5;
+			w_wrong++;
 		}
 		cnt++;
-		s_acc=100-(float)s_wrong/20*100;
+		w_acc=100-(float)w_wrong/20*100;
 	}
 	system("clear");
-	placeword(tmp[x], "단어 연습",s_process,s_wrong,s_acc);
+	placeword(tmp[x], "단어 연습",w_process,w_wrong,w_acc);
 }
 
 
