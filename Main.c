@@ -132,7 +132,7 @@ void word()
 {
 	srand(time(NULL));
 	char tmp[100][100]={
-		"about","all","also","and" "as","at","be","because","but","by",
+		"about","all","also","and", "as","at","be","because","but","by",
 		"can","come","could","day","do","even","find","first","for","from",
 		"get","give","go","have","he","her","here","him","his","how",
 		"I","if","in","into","it","its","just","know","like","look",
@@ -150,14 +150,13 @@ void word()
 
 	printf("\n\n");
 
-	while(cnt!=20){
+	while(cnt<=20){
 		x = rand()%100;
 		placeword(tmp[x], "단어 연습",s_process,s_wrong,s_acc);
 		scanf("%s", typer);
 
 		if(strcmp(tmp[x],typer) == 0){
 			s_process+=5;
-			continue;
 		} else {
 			s_process+=5;
 			s_wrong++;
@@ -233,7 +232,7 @@ void place()
 int main()
 {
 	int menu;
-	printf("	   ;>>영어 타자 연습<<		\n");
+	printf("	   >>영어 타자 연습<<		\n");
 	printf("1. 자리수 연습		2. 낱말 연습\n");
 	printf("3. 짧은글 연습		4. 긴글 연습\n");
 	
