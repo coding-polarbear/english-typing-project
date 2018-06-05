@@ -75,7 +75,7 @@ void placeword(char tmp[], char title[], int s_process, int s_wrong, float s_acc
 
 double Livetype(int correct, time_t startTime, time_t endTime)
 {
-	double type =  (correct * (60 / ((double)(endTime - startTime) / 1000))); //시간에서 입력한 타자수를 곱함
+	double type =  ((correct * 60) / ((double)(endTime - startTime) /1000)); //시간에서 입력한 타자수를 곱함
 	if(type > besttype)
 	{
 		besttype = type;
@@ -122,10 +122,10 @@ void s_sentence()
 
 	char typer, typing_storge[200];
 	int s_prosess = 0, s_acc = 0; // 진행도, 타수, 최고타수, 정확도
-	double s_livetype = 0;
 	int index = 0;
 	int correct = 0, temp; //맞은개수
-	
+	double s_livetype = 0;
+
 	srand(time(NULL));
 	int random_choice = rand() % 30;
 	Render(tmp[random_choice], "짧은 글 연습", s_prosess, s_livetype, besttype, s_acc);
@@ -189,8 +189,8 @@ void l_sentence()
 			"I was a terrible skier.\n"
 			"I could hardly stand up!\n"
 			"says pill, now on 25.\n"
-			"On Phil's first trip down the mountain he fell and crashed into a group of people standing nearby.", 
-			
+			"On Phil's first trip down the mountain he fell and crashed into a group of people standing nearby.",
+
 			"He didn't know then, but they were snowborders.\n"
 			"I heared someone shouting at me\n"
 			"I looked up and there was Mika\n"
@@ -204,24 +204,48 @@ void l_sentence()
 			"Using these sites can help friends and family stay in touch.\n"
 			"They are also good if you want to find any long-lost friends, and to make new ones.\n"
 			"This is especially useful for people who don't go out much, perhaps because they are old, sick, or shy.",
-
+		
 			"abcdefg"
 		}
 	};
-	int s_process = 0;
+	int s_process = 0, correct = 0, s_acc = 0;
 	int index = 0;
 	Render(tmp[1][0], "긴글연습",s_process, 0, 0, 0);
 	printf("\n");
-
+	bool page = true;
 	char typing_storage[400];
+
 	while(s_process != 100) {
 		char typer = getche();
 		if(typer == 127 || typer == 8) {
-			index--;
-			Update(tmp[1][0], typing_storage, s_process, 0, 0, 0, index, true);
+			if(index > 0) {
+				if(tmp[1][page][index -1] == typing_storage[index -1]) {
+					correct--;
+				}
+				index--;
+				if(index == 0) {
+					correct = 0;
+					s_acc = 0;
+				} else {
+					s_acc = ((float) correct / index) * 100;
+				}
+				Update(tmp[1][0], typing_storage, s_process, 0, 0, s_acc, index, true);
+			} else {
+				index = 0;
+				s_acc = 0;
+				correct = 0;
+				Render(tmp[1][0], "긴글 연습", s_process, 0, 0, s_acc);
+				continue;
+			}
 		} else {
 			typing_storage[index] = typer;
+			if(typing_storage[index] == tmp[1][0][index]) {
+				correct++;
+			}
+			typing_storage[index] = typer;
 			index++;
+			s_acc = ((float)correct / index) * 100;
+			Update(tmp[1][0], typing_storage, s_process, 0, 0, s_acc, index, true);
 		}
 	}
 
