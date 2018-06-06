@@ -59,7 +59,7 @@ void Render(char tmp[], char title[], int s_prosess, double s_livetype, double b
 	system("clear");
 	printf("%s\n", title);
 	printf("\n");
-	printf("진행도: %d 현재타수: %0.f 최고타수: %0.f 정확도: %d \n\n", s_prosess, s_livetype, besttype, s_acc);
+	printf("진행도: %d%% 현재타수: %0.f 최고타수: %0.f 정확도: %d \n\n", s_prosess, s_livetype, besttype, s_acc);
 	printf("%s\n", tmp);
 }
 
@@ -347,13 +347,14 @@ void word()
 
 	printf("\n\n");
 
-	while(cnt!=20){
+	while(cnt<=20){
 		x = rand()%100;
 		placeword(tmp[x], ">> 영문 타자 연습 프로그램 : 낱말 연습 <<",process,wrong,acc);
 		scanf("%s", typer);
 
 		if(strcmp(tmp[x],typer) == 0){
 			process+=5;
+			cnt++;
 			continue;
 		}
 		else if(typer == "###"){
@@ -363,15 +364,17 @@ void word()
 		else {
 			process+=5;
 			wrong++;
+			cnt++;
 		}
-		cnt++;
 		acc=100-(float)wrong/20*100;
 	}
 	system("clear");
 	placeword(tmp[x], ">>영문 타자 연습 프로그램 : 낱말 연습<<",process,wrong,acc);
-	if(typer == '\n');
-	print_menu();
-
+	char put;
+	put = getche();
+	if(put=='\n'){
+		print_menu();
+	}
 
 }
 
@@ -441,7 +444,7 @@ void print_menu()
 {
 	int menu;
 	system("clear");
-	printf("	   ;>>영어 타자 연습<<		\n");
+	printf("	   >>영어 타자 연습<<		\n");
 	printf("1. 자리수 연습		2. 낱말 연습\n");
 	printf("3. 짧은글 연습		4. 긴글 연습\n");
 	printf("5. 프로그램 종료\n");
