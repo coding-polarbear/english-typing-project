@@ -409,7 +409,14 @@ void place()
 			count++;
    			process+=5;
      		exact=(float)count/totalchallenge*100;
-		} else {
+			
+		}
+		else if(put==27)
+		{
+			system("clear");
+			print_menu();
+		}
+		else {
       		while(put!=putalphabet)
 			{
 				error++;
@@ -426,10 +433,8 @@ void place()
 			process+=5;
 		}
 		exact=(float)count/totalchallenge*100;
-	
-
-
- 	}
+		
+	}
 	 if(count==20)
  	{
    	system("clear");
