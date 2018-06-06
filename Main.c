@@ -297,6 +297,7 @@ void l_sentence()
 				index = 0;
 				correct = 0;
 				if(page == 0) {
+					startTime = time(NULL);
 					s_acc = 0;
 					page++;
 					Render(tmp[random_choice][page], ">> 영문 타자 연습 프로그램 : 긴 글 연습 <<", s_process, s_livetype, 0, s_acc, true);
@@ -324,7 +325,7 @@ void l_sentence()
 			Update(tmp[random_choice][page], typing_storage, s_process, s_livetype, 0, s_acc, index, true);
 		}
 	}
-	Render("", "통계", s_process, 0, 0, s_acc, true);
+	Render("", "통계", s_process, s_livetype, 0, s_acc, true);
 	char typer = getche();
 	if(typer == '\n')
 		print_menu();
