@@ -63,15 +63,11 @@ void Render(char tmp[], char title[], int s_prosess, double s_livetype, double b
 	system("clear");
 	printf("%s\n", title);
 	printf("\n");
-<<<<<<< HEAD
-	printf("진행도: %d%% 현재타수: %0.f 최고타수: %0.f 정확도: %d \n\n", s_prosess, s_livetype, besttype, s_acc);
-=======
 	if(is_long) {
 		printf("현재타수: %0.f 정확도: %d \n\n",s_livetype, s_acc);
 	} else {
 		printf("진행도: %d 현재타수: %0.f 최고타수: %0.f 정확도: %d \n\n", s_prosess, s_livetype, besttype, s_acc);
 	}
->>>>>>> b5b12153e1828a49a214067bc2441fd9eb3d9abb
 	printf("%s\n", tmp);
 }
 
@@ -344,8 +340,8 @@ void word()
 		"to","two","up","use","very","want","way","we","well","what",
 		"when","which","who","will","with","would","year","you","your","zebra"};
 
-	int s_process=0, s_wrong=0, cnt =1;
-	float s_acc=100;
+	int process=0, wrong=0, cnt =1;
+	float acc=100;
 	int x; 
 	char typer[]={0};
 
@@ -353,18 +349,16 @@ void word()
 
 	while(cnt<=20){
 		x = rand()%100;
-		placeword(tmp[x], "단어 연습",s_process,s_wrong,s_acc);
+		placeword(tmp[x], "단어 연습",process,wrong,acc);
 		scanf("%s", typer);
 
 		if(strcmp(tmp[x],typer) == 0){
-<<<<<<< HEAD
 			process+=5;
 			cnt++;
 			continue;
 		}
-		else if(typer == "###"){
-			system("clear");
-			print_menu();
+		else if(strcmp(typer, "###") == 0){
+			break;
 		}
 		else {
 			process+=5;
@@ -372,30 +366,16 @@ void word()
 			cnt++;
 		}
 		acc=100-(float)wrong/20*100;
-=======
-			s_process+=5;
-			continue;
-		} else {
-			s_process+=5;
-			s_wrong++;
-		}
-		cnt++;
-		s_acc=100-(float)s_wrong/20*100;
->>>>>>> b5b12153e1828a49a214067bc2441fd9eb3d9abb
 	}
 	
-	system("clear");
-<<<<<<< HEAD
-	placeword(tmp[x], ">>영문 타자 연습 프로그램 : 낱말 연습<<",process,wrong,acc);
+	placeword("", ">>영문 타자 연습 프로그램 : 낱말 연습<<",process,wrong,acc);
 	char put;
+	getche();
 	put = getche();
 	if(put=='\n'){
 		print_menu();
 	}
 
-=======
-	placeword(tmp[x], "단어 연습",s_process,s_wrong,s_acc);
->>>>>>> b5b12153e1828a49a214067bc2441fd9eb3d9abb
 }
 
 
