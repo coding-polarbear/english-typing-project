@@ -63,13 +63,12 @@ void Render(char tmp[], char title[], int s_prosess, double s_livetype, double b
 	printf("%s\n", tmp);
 }
 
-void placeword(char tmp[], char title[], int s_process, int s_wrong, float s_acc)
+void placeword(char tmp[], char title[], int process, int wrong, float acc)
 {
 	int typer;
 	system("clear");
 	printf("%s\n", title);
-	printf("\n");
-	printf("진행도 : %d%%	오타수: %d	정확도 : %.2f%%\n\n", s_process,s_wrong, s_acc);
+	printf("진행도 : %d%%	오타수: %d	정확도 : %.2f%%\n\n", process,wrong,acc);
 	printf("%s\n", tmp);
 }
 
@@ -244,8 +243,13 @@ void l_sentence()
 	int page = 0;
 	int count = 1;
 	srand(time(NULL));
+<<<<<<< HEAD
 	int random_choice = rand() % 4;
 	Render(tmp[random_choice][page], "긴글연습",s_process, 0, 0, 0);
+=======
+	int random_choice = rand() % 5;
+	Render(tmp[random_choice][page], ">> 영문 타자 연습 프로그램 : 긴 글 연습 <<",s_process, 0, 0, 0);
+>>>>>>> f40c53e0672326f5b40ed6446dd799054c4e750f
 
 	printf("\n");
 	char typing_storage[400];
@@ -273,7 +277,7 @@ void l_sentence()
 				index = 0;
 				s_acc = 0;
 				correct = 0;
-				Render(tmp[random_choice][page], "긴글 연습", s_process, 0, 0, s_acc);
+				Render(tmp[random_choice][page], ">> 영문 타자 연습 프로그램 : 긴 글 연습 <<", s_process, 0, 0, s_acc);
 				continue;
 			}
 		} else  if(typer == '\n') {
@@ -290,6 +294,10 @@ void l_sentence()
 				} else {
 					break;
 				}
+<<<<<<< HEAD
+=======
+				Render(tmp[random_choice][page], ">> 영문 타자 연습 프로그램 : 긴 글 연습 <<", s_process, 0, 0, s_acc);
+>>>>>>> f40c53e0672326f5b40ed6446dd799054c4e750f
 			} else {
 				if(typing_storage[index] == tmp[random_choice][page][index]) {
 					correct++;
@@ -320,7 +328,7 @@ void word()
 {
 	srand(time(NULL));
 	char tmp[100][100]={
-		"about","all","also","and" "as","at","be","because","but","by",
+		"about","all","also","and","as","at","be","because","but","by",
 		"can","come","could","day","do","even","find","first","for","from",
 		"get","give","go","have","he","her","here","him","his","how",
 		"I","if","in","into","it","its","just","know","like","look",
@@ -331,8 +339,8 @@ void word()
 		"to","two","up","use","very","want","way","we","well","what",
 		"when","which","who","will","with","would","year","you","your","zebra"};
 
-	int s_process=0, s_wrong=0, cnt =1;
-	float s_acc=100;
+	int process=0, wrong=0, cnt =1;
+	float acc=100;
 	int x; 
 	char typer[]={0};
 
@@ -340,21 +348,30 @@ void word()
 
 	while(cnt!=20){
 		x = rand()%100;
-		placeword(tmp[x], "단어 연습",s_process,s_wrong,s_acc);
+		placeword(tmp[x], ">> 영문 타자 연습 프로그램 : 낱말 연습 <<",process,wrong,acc);
 		scanf("%s", typer);
 
 		if(strcmp(tmp[x],typer) == 0){
-			s_process+=5;
+			process+=5;
 			continue;
-		} else {
-			s_process+=5;
-			s_wrong++;
+		}
+		else if(typer == "###"){
+			system("clear");
+			print_menu();
+		}
+		else {
+			process+=5;
+			wrong++;
 		}
 		cnt++;
-		s_acc=100-(float)s_wrong/20*100;
+		acc=100-(float)wrong/20*100;
 	}
 	system("clear");
-	placeword(tmp[x], "단어 연습",s_process,s_wrong,s_acc);
+	placeword(tmp[x], ">>영문 타자 연습 프로그램 : 낱말 연습<<",process,wrong,acc);
+	if(typer == '\n');
+	print_menu();
+
+
 }
 
 
@@ -372,7 +389,7 @@ void place()
 	while(count<=20)
 	{
 		system("clear");
-	  	printf ("자리연습 \n");
+	  	printf (">> 영문 타자 연습 프로그램 : 자리 연습 << \n");
 	  	printf("진행도:%d%%  오타수:%d  정확도:%.1f%% ",process,error,exact);
 	  	printf("\n\n");
 
@@ -406,7 +423,7 @@ void place()
 				totalchallenge++;
 				exact=(float)count/totalchallenge*100;
 				system("clear");
-				printf ("자리연습 \n");
+				printf (">> 영문 타자 연습 프로그램 : 자리 연습 << \n");
 				printf("진행도:%d%%  오타수:%d  정확도:%.1f%% ",process,error,exact);
 				printf("\n\n");
 				printf("%c\n",putalphabet);
@@ -426,7 +443,9 @@ void print_menu()
 	printf("	   ;>>영어 타자 연습<<		\n");
 	printf("1. 자리수 연습		2. 낱말 연습\n");
 	printf("3. 짧은글 연습		4. 긴글 연습\n");
+	printf("5. 프로그램 종료\n");
 	
+	printf("번호를 선택하세요: ");
 	scanf("%d", &menu);
 	getchar();
 	switch(menu)
