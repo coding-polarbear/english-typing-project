@@ -219,7 +219,8 @@ void l_sentence()
 			"As long as you remember all the people that you used to be.\n",
 
 			"I will not forget one line of this, not one day.\n"
-			"I swear. I will always remember when the Doctor was me.\n"
+			"I swear.\n"
+			"I will always remember when the Doctor was me.\n"
 			"Raggedy man. Good night.\n"
 			"No no! Please don't change.\n"
 		}, 
@@ -251,14 +252,15 @@ void l_sentence()
 
 		}
 	};
+	int enter_count = 0;
 	int s_process = 0, correct = 0, s_acc = 0;
 	int index = 0;
+	int page = 0;
 	srand(time(NULL));
 	int random_choice = rand() % 5;
-	Render(tmp[random_choice][0], "긴글연습",s_process, 0, 0, 0);
+	Render(tmp[random_choice][page], "긴글연습",s_process, 0, 0, 0);
 
 	printf("\n");
-	int page = 0;
 	char typing_storage[400];
 
 	while(s_process != 100) {
@@ -268,6 +270,10 @@ void l_sentence()
 				if(tmp[random_choice][page][index -1] == typing_storage[index -1]) {
 					correct--;
 				}
+				if(typing_storage[index -1] == '\n') {
+					enter_count--;
+				}
+				printf("enter_count: %d\n", enter_count);
 				index--;
 				if(index == 0) {
 					correct = 0;
@@ -275,23 +281,45 @@ void l_sentence()
 				} else {
 					s_acc = ((float) correct / index) * 100;
 				}
-				Update(tmp[random_choice][0], typing_storage, s_process, 0, 0, s_acc, index, true);
+				Update(tmp[random_choice][page], typing_storage, s_process, 0, 0, s_acc, index, true);
 			} else {
 				index = 0;
 				s_acc = 0;
 				correct = 0;
-				Render(tmp[random_choice][0], "긴글 연습", s_process, 0, 0, s_acc);
+				Render(tmp[random_choice][page], "긴글 연습", s_process, 0, 0, s_acc);
 				continue;
+			}
+		} else  if(typer == '\n') {
+			typing_storage[index] = typer;
+			enter_count++;
+			if(enter_count >= 5) {
+				enter_count = 0;
+				index = 0;
+				s_acc = 0;
+				correct = 0;
+				if(page == 0) {
+					page++;
+				} else {
+					random_choice = rand() % 5;
+					page = 0;
+				}
+				Render(tmp[random_choice][page], "긴글 연습", s_process, 0, 0, s_acc);
+			} else {
+				if(typing_storage[index] == tmp[random_choice][page][index]) {
+					correct++;
+				}
+				index++;
+				s_acc = ((float)correct / index) * 100;
+				Update(tmp[random_choice][page], typing_storage, s_process, 0, 0, s_acc, index, true);
 			}
 		} else {
 			typing_storage[index] = typer;
 			if(typing_storage[index] == tmp[random_choice][page][index]) {
 				correct++;
 			}
-			typing_storage[index] = typer;
 			index++;
 			s_acc = ((float)correct / index) * 100;
-			Update(tmp[random_choice][0], typing_storage, s_process, 0, 0, s_acc, index, true);
+			Update(tmp[random_choice][page], typing_storage, s_process, 0, 0, s_acc, index, true);
 		}
 	}
 
