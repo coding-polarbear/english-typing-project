@@ -274,7 +274,6 @@ void l_sentence()
 				if(typing_storage[index -1] == '\n') {
 					enter_count--;
 				}
-				printf("enter_count: %d\n", enter_count);
 				index--;
 				if(index == 0) {
 					correct = 0;
