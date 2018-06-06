@@ -499,6 +499,9 @@ void print_menu()
 			system("clear");
 			l_sentence();
 			break;
+		default:
+			system("clear");
+			break;
 	}
 }
 
