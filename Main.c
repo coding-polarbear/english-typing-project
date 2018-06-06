@@ -42,7 +42,11 @@ double besttype = 0;
 void Update(char tmp[], char typing_storge[], int s_prosess, double s_livetype, double besttype, int s_acc, int index, bool is_long) 
 {
 	system("clear");
-	printf("짧은 글 연습\n");
+	if(is_long) {
+		printf(">> 영문 타자 연습 프로그램 : 긴 글 연습 <<\n");
+	} else {
+		printf(">> 영문 타자 연습 프로그램 : 짧은글 연습 <<\n");
+	}
 	printf("\n");
 	printf("진행도: %d 현재타수: %0.f 최고타수: %0.f 정확도: %d \n\n", s_prosess, s_livetype, besttype, s_acc);
 	printf("%s\n", tmp);
@@ -243,13 +247,8 @@ void l_sentence()
 	int page = 0;
 	int count = 1;
 	srand(time(NULL));
-<<<<<<< HEAD
 	int random_choice = rand() % 4;
-	Render(tmp[random_choice][page], "긴글연습",s_process, 0, 0, 0);
-=======
-	int random_choice = rand() % 5;
 	Render(tmp[random_choice][page], ">> 영문 타자 연습 프로그램 : 긴 글 연습 <<",s_process, 0, 0, 0);
->>>>>>> f40c53e0672326f5b40ed6446dd799054c4e750f
 
 	printf("\n");
 	char typing_storage[400];
@@ -290,14 +289,11 @@ void l_sentence()
 				if(page == 0) {
 					s_acc = 0;
 					page++;
-					Render(tmp[random_choice][page], "긴글 연습", s_process, 0, 0, s_acc);
+					Render(tmp[random_choice][page], ">> 영문 타자 연습 프로그램 : 긴 글 연습 <<", s_process, 0, 0, s_acc);
 				} else {
 					break;
 				}
-<<<<<<< HEAD
-=======
 				Render(tmp[random_choice][page], ">> 영문 타자 연습 프로그램 : 긴 글 연습 <<", s_process, 0, 0, s_acc);
->>>>>>> f40c53e0672326f5b40ed6446dd799054c4e750f
 			} else {
 				if(typing_storage[index] == tmp[random_choice][page][index]) {
 					correct++;
