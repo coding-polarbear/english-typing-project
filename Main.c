@@ -83,7 +83,7 @@ void placeword(char tmp[], char title[], int s_process, int s_wrong, float s_acc
 
 double Livetype(int correct, time_t startTime, time_t endTime)
 {
-	double type =  ((correct * 60) / ((double)(endTime - startTime) /1000)); //시간에서 입력한 타자수를 곱함
+	double type =  (correct * 60) / (double)(endTime - startTime); //시간에서 입력한 타자수를 곱함
 	if(type > besttype)
 	{
 		besttype = type;
@@ -138,14 +138,15 @@ void s_sentence()
 	int random_choice = rand() % 30;
 	Render(tmp[random_choice], "짧은 글 연습", s_prosess, s_livetype, besttype, s_acc, false);
 
-	time_t startTime = 0, endTime = 0;
-	startTime = clock();
+	time_t startTime, endTime;
+	startTime = time(NULL);
 
 	while (s_prosess != 100)
 	{
 		typer = getche();
 		if(typer == '\n')
 		{
+			startTime = time(NULL);
 			random_choice = rand() % 30;
 			index = 0;
 			correct = 0;
@@ -179,7 +180,7 @@ void s_sentence()
 				correct++;
 			}
 			index++;
-			endTime = clock();
+			endTime = time(NULL);
 			s_livetype = Livetype(correct, startTime, endTime);
 			s_acc = ((float) correct / index) * 100;
 			Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, besttype, s_acc, index, false);
@@ -255,6 +256,11 @@ void l_sentence()
 	int random_choice = rand() % 4;
 	Render(tmp[random_choice][page], ">> 영문 타자 연습 프로그램 : 긴 글 연습 <<",s_process, 0, 0, 0, true);
 
+	double s_livetype = 0;
+	time_t startTime, endTime;
+	
+	startTime = time(NULL);
+
 	printf("\n");
 	char typing_storage[400];
 
@@ -276,12 +282,12 @@ void l_sentence()
 				} else {
 					s_acc = ((float) correct / index) * 100;
 				}
-				Update(tmp[random_choice][page], typing_storage, s_process, 0, 0, s_acc, index, true);
+				Update(tmp[random_choice][page], typing_storage, s_process, s_livetype, 0, s_acc, index, true);
 			} else {
 				index = 0;
 				s_acc = 0;
 				correct = 0;
-				Render(tmp[random_choice][page], ">> 영문 타자 연습 프로그램 : 긴 글 연습 <<", s_process, 0, 0, s_acc, true);
+				Render(tmp[random_choice][page], ">> 영문 타자 연습 프로그램 : 긴 글 연습 <<", s_process, s_livetype, 0, s_acc, true);
 				continue;
 			}
 		} else  if(typer == '\n') {
@@ -294,27 +300,29 @@ void l_sentence()
 				if(page == 0) {
 					s_acc = 0;
 					page++;
-					Render(tmp[random_choice][page], ">> 영문 타자 연습 프로그램 : 긴 글 연습 <<", s_process, 0, 0, s_acc, true);
+					Render(tmp[random_choice][page], ">> 영문 타자 연습 프로그램 : 긴 글 연습 <<", s_process, s_livetype, 0, s_acc, true);
 				} else {
 					break;
 				}
-				Render(tmp[random_choice][page], ">> 영문 타자 연습 프로그램 : 긴 글 연습 <<", s_process, 0, 0, s_acc, true);
+				Render(tmp[random_choice][page], ">> 영문 타자 연습 프로그램 : 긴 글 연습 <<", s_process, s_livetype, 0, s_acc, true);
 			} else {
 				if(typing_storage[index] == tmp[random_choice][page][index]) {
 					correct++;
 				}
 				index++;
 				s_acc = ((float)correct / index) * 100;
-				Update(tmp[random_choice][page], typing_storage, s_process, 0, 0, s_acc, index, true);
+				Update(tmp[random_choice][page], typing_storage, s_process, s_livetype, 0, s_acc, index, true);
 			}
 		} else {
 			typing_storage[index] = typer;
 			if(typing_storage[index] == tmp[random_choice][page][index]) {
 				correct++;
 			}
+			endTime = time(NULL);
+			s_livetype = Livetype(correct, startTime, endTime);
 			index++;
 			s_acc = ((float)correct / index) * 100;
-			Update(tmp[random_choice][page], typing_storage, s_process, 0, 0, s_acc, index, true);
+			Update(tmp[random_choice][page], typing_storage, s_process, s_livetype, 0, s_acc, index, true);
 		}
 	}
 	Render("", "통계", s_process, 0, 0, s_acc, true);
