@@ -374,12 +374,12 @@ void word()
 void place()
 {  
 	float exact =0;
-	int error=-1, process=0;
+	int error=0, process=0;
 	int count=0;
 	int totalchallenge=0;
 	char putalphabet;
 	
-	while(count<=20)
+	while(count<20)
 	{
 		system("clear");
 	  	printf ("자리연습 \n");
@@ -423,10 +423,25 @@ void place()
 				put=getche();
 			}
 			count++;
+			process+=5;
 		}
 		exact=(float)count/totalchallenge*100;
  	}
-	 print_menu();
+	 if(count==20)
+ 	{
+   		system("clear");
+   		printf ("자리연습 \n");
+  		printf("진행도:%d%%  오타수:%d  정확도:%.1f%% ",process,error,exact);
+		printf("\n");
+		char put;
+		put=getche();
+		if(put =='\n')
+		{
+			print_menu();
+		}
+	}
+
+	
 }
 
 void print_menu()
