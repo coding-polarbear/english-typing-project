@@ -199,27 +199,73 @@ void l_sentence()
 			"But when I helped him up, he gave me a beautiful smile."
 		},
 		{
-			"I'm going to talk about social networking.\n"
-			"Lots of people use sites such as Facebook and Twitter these days.\n"
-			"Using these sites can help friends and family stay in touch.\n"
-			"They are also good if you want to find any long-lost friends, and to make new ones.\n"
-			"This is especially useful for people who don't go out much, perhaps because they are old, sick, or shy.",
-		
-			"abcdefg"
+			"It all just disappears, doesn't it?\n"
+			"Everything you are, gone in moment.\n"
+			"Like breath on a mirror. Any moment now, he's coming.\n"
+			"Who's coming?\n"
+			"The Doctor.\n",
+
+			"You... you are the Doctor.\n"
+			"Yep. And I always will be.\n"
+			"But times change, and so must I.\n"
+			"Who's Amelia?\n"
+			"The first face this face saw.\n"
+		},
+		{
+			"We all change, when you think about it.\n"
+			"We're all different people all through our lives.\n"
+			"And that's okay, that's good.\n" 
+			"You've got to keep moving.\n"
+			"As long as you remember all the people that you used to be.\n",
+
+			"I will not forget one line of this, not one day.\n"
+			"I swear. I will always remember when the Doctor was me.\n"
+			"Raggedy man. Good night.\n"
+			"No no! Please don't change.\n"
+		}, 
+		{
+			"Oh, there it is.\n"
+			"The silly old universe.\n"
+			"The more I save it, the more it needs saving.\n"
+			"It's a treadmill.\n"
+			"Yes, yes, I know. They'll get it all wrong without me.\n",
+
+			"I suppose one more lifetime wouldn't kill anyone.\n"
+			"Well, except me.\n"
+			" You wait a moment, Doctor. Let's get it right.\n"
+			"I've got a few things to say to you.\n"
+			"Basic stuff first.\n" 
+		},
+		{
+			"Never be cruel, never be cowardly, and never, ever eat pears!\n"
+			"Remember, hate is always foolish. and love is always wise.\n"
+			"Always try to be nice, but never fail to be kind.\n"
+			"Oh, and you mustn't tell anyone your name.\n" 
+			"No one would understand it, anyway.\n",
+
+			"Except, ah! (collapses) Except children. Children can hear it sometimes.\n" 
+			"If their hearts are in the right place, and the stars are too, children can hear your name.\n"
+			"Argh! But nobody else. Nobody else, ever.\n"
+			"Laugh hard. Run fast. Be kind.\n"
+			"Doctor, I let you go.\n"
+
 		}
 	};
 	int s_process = 0, correct = 0, s_acc = 0;
 	int index = 0;
-	Render(tmp[1][0], "긴글연습",s_process, 0, 0, 0);
+	srand(time(NULL));
+	int random_choice = rand() % 5;
+	Render(tmp[random_choice][0], "긴글연습",s_process, 0, 0, 0);
+
 	printf("\n");
-	bool page = true;
+	int page = 0;
 	char typing_storage[400];
 
 	while(s_process != 100) {
 		char typer = getche();
 		if(typer == 127 || typer == 8) {
 			if(index > 0) {
-				if(tmp[1][page][index -1] == typing_storage[index -1]) {
+				if(tmp[random_choice][page][index -1] == typing_storage[index -1]) {
 					correct--;
 				}
 				index--;
@@ -229,23 +275,23 @@ void l_sentence()
 				} else {
 					s_acc = ((float) correct / index) * 100;
 				}
-				Update(tmp[1][0], typing_storage, s_process, 0, 0, s_acc, index, true);
+				Update(tmp[random_choice][0], typing_storage, s_process, 0, 0, s_acc, index, true);
 			} else {
 				index = 0;
 				s_acc = 0;
 				correct = 0;
-				Render(tmp[1][0], "긴글 연습", s_process, 0, 0, s_acc);
+				Render(tmp[random_choice][0], "긴글 연습", s_process, 0, 0, s_acc);
 				continue;
 			}
 		} else {
 			typing_storage[index] = typer;
-			if(typing_storage[index] == tmp[1][0][index]) {
+			if(typing_storage[index] == tmp[random_choice][page][index]) {
 				correct++;
 			}
 			typing_storage[index] = typer;
 			index++;
 			s_acc = ((float)correct / index) * 100;
-			Update(tmp[1][0], typing_storage, s_process, 0, 0, s_acc, index, true);
+			Update(tmp[random_choice][0], typing_storage, s_process, 0, 0, s_acc, index, true);
 		}
 	}
 
