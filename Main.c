@@ -183,21 +183,7 @@ void s_sentence()
 //긴글 연습
 void l_sentence()
 {
-	char tmp [5][2][400] = {
-		{
-			"When Phil Spencer went skiing three years ago, he had no idea how much his life would change as a result.\n"
-			"I was a terrible skier.\n"
-			"I could hardly stand up!\n"
-			"says pill, now on 25.\n"
-			"On Phil's first trip down the mountain he fell and crashed into a group of people standing nearby.",
-
-			"He didn't know then, but they were snowborders.\n"
-			"I heared someone shouting at me\n"
-			"I looked up and there was Mika\n"
-			"I've never forgotten the time I first saw him\n"
-			"I was so angry. adds Mika\n"
-			"But when I helped him up, he gave me a beautiful smile."
-		},
+	char tmp [4][2][400] = {
 		{
 			"It all just disappears, doesn't it?\n"
 			"Everything you are, gone in moment.\n"
@@ -256,8 +242,9 @@ void l_sentence()
 	int s_process = 0, correct = 0, s_acc = 0;
 	int index = 0;
 	int page = 0;
+	int count = 1;
 	srand(time(NULL));
-	int random_choice = rand() % 5;
+	int random_choice = rand() % 4;
 	Render(tmp[random_choice][page], "긴글연습",s_process, 0, 0, 0);
 
 	printf("\n");
@@ -295,15 +282,14 @@ void l_sentence()
 			if(enter_count >= 5) {
 				enter_count = 0;
 				index = 0;
-				s_acc = 0;
 				correct = 0;
 				if(page == 0) {
+					s_acc = 0;
 					page++;
+					Render(tmp[random_choice][page], "긴글 연습", s_process, 0, 0, s_acc);
 				} else {
-					random_choice = rand() % 5;
-					page = 0;
+					break;
 				}
-				Render(tmp[random_choice][page], "긴글 연습", s_process, 0, 0, s_acc);
 			} else {
 				if(typing_storage[index] == tmp[random_choice][page][index]) {
 					correct++;
@@ -322,6 +308,10 @@ void l_sentence()
 			Update(tmp[random_choice][page], typing_storage, s_process, 0, 0, s_acc, index, true);
 		}
 	}
+	Render("", "통계", s_process, 0, 0, s_acc);
+	char typer = getche();
+	if(typer == '\n')
+		print_menu();
 
 }
 
