@@ -362,6 +362,7 @@ void word()
 		cnt++;
 		s_acc=100-(float)s_wrong/20*100;
 	}
+	
 	system("clear");
 	placeword(tmp[x], "단어 연습",s_process,s_wrong,s_acc);
 }
@@ -425,6 +426,9 @@ void place()
 			process+=5;
 		}
 		exact=(float)count/totalchallenge*100;
+	
+
+
  	}
 	 if(count==20)
  	{
@@ -432,7 +436,9 @@ void place()
    	printf ("자리연습 \n");
   	printf("진행도:%d%%  오타수:%d  정확도:%.1f%% ",process,error,exact);
 	printf("\n");
-		if(getche=='\n')
+	char put;
+	put=getche();
+		if(put=='\n')
 		{
 		print_menu();
 		}
