@@ -82,6 +82,7 @@ void wordscreen(char tmp[], char title[], int process, int wrong, float acc)
 
 double Livetype(int correct, time_t startTime, time_t endTime)
 {
+	if(startTime == endTime) return 0;
 	double type =  (correct * 60) / (double)(endTime - startTime); //시간에서 입력한 타자수를 곱함
 	if(type > besttype)
 	{
