@@ -228,7 +228,7 @@ void l_sentence()
 
 			"I suppose one more lifetime wouldn't kill anyone.\n"
 			"Well, except me.\n"
-			" You wait a moment, Doctor. Let's get it right.\n"
+			"You wait a moment, Doctor. Let's get it right.\n"
 			"I've got a few things to say to you.\n"
 			"Basic stuff first.\n" 
 		},
