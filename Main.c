@@ -186,7 +186,7 @@ void s_sentence()
 			Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, besttype, s_acc, index, false);
 		}
 	}
-	print_menu();
+	return;
 }
 
 //긴글 연습
@@ -328,7 +328,7 @@ void l_sentence()
 	Render("", "통계", s_process, s_livetype, 0, s_acc, true);
 	char typer = getche();
 	if(typer == '\n')
-		print_menu();
+		return;
 
 }
 
@@ -381,7 +381,7 @@ void word()
 	getche();
 	put = getche();
 	if(put=='\n'){
-		print_menu();
+		return;
 	}//엔터치면 메뉴 돌아가기 
 
 }
@@ -433,7 +433,7 @@ void place()
 		else if(put==27)
 		{
 			system("clear");
-			print_menu();
+			return;
 		}
 		else {
       		while(put!=putalphabet)
@@ -464,7 +464,7 @@ void place()
 	put=getche();
 		if(put=='\n')
 		{
-		print_menu();
+			return;
 		}
 	}
 
@@ -473,36 +473,38 @@ void place()
 
 void print_menu()
 {
-	int menu;
-	system("clear");
-	printf("	   >>영어 타자 연습<<		\n");
-	printf("1. 자리수 연습		2. 낱말 연습\n");
-	printf("3. 짧은글 연습		4. 긴글 연습\n");
-	printf("5. 프로그램 종료\n");
-	printf("번호를 선택하세요: ");
-	scanf("%d", &menu);
-	getchar();
-	switch(menu)
-	{
-		case 1:
-			system("clear");
-			place();
-			break;
-		case 2:
-			system("clear");
-			word();
-			break;
-		case 3:
-			system("clear");
-			s_sentence();
-			break;
-		case 4:
-			system("clear");
-			l_sentence();
-			break;
-		default:
-			system("clear");
-			break;
+	int menu = 0;
+	while(menu != 5) {
+		system("clear");
+		printf("	   >>영어 타자 연습<<		\n");
+		printf("1. 자리수 연습		2. 낱말 연습\n");
+		printf("3. 짧은글 연습		4. 긴글 연습\n");
+		printf("5. 프로그램 종료\n");
+		printf("번호를 선택하세요: ");
+		scanf("%d", &menu);
+		getchar();
+		switch(menu)
+		{
+			case 1:
+				system("clear");
+				place();
+				break;
+			case 2:
+				system("clear");
+				word();
+				break;
+			case 3:
+				system("clear");
+				s_sentence();
+				break;
+			case 4:
+				system("clear");
+				l_sentence();
+				break;
+			default:
+				system("clear");
+				break;
+		}
 	}
 }
 
