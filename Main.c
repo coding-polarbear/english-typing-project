@@ -351,7 +351,7 @@ void word()
 	int process=0, wrong=0, cnt =1;//진행도, 오타수, 횟수
 	float acc=100;//진행도
 	int x; 
-	char typer[]={0};
+	char typer[100];
 
 	printf("\n\n");
 
