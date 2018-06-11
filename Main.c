@@ -37,7 +37,8 @@ char getche(void){
 }//위의 것들은 getche를 linux환경에서 헤더없이 구현하기위해 삽입.
 int tmp;
 
-double besttype = 0;
+double besttype = 0, liveTypeMean = 0;
+int saveCorrect;
 
 void Update(char tmp[], char typing_storge[], int s_prosess, double s_livetype, double besttype, int s_acc, int index, bool is_long) 
 {
@@ -88,6 +89,7 @@ double Livetype(int correct, time_t startTime, time_t endTime)
 	{
 		besttype = type;
 	}
+	liveTypeMean += type;
 	return type;
 }
 
@@ -280,6 +282,7 @@ void l_sentence()
 				}
 				index--;
 				if(index == 0) {
+					saveCorrect = correct;
 					correct = 0;
 					s_acc = 0;
 				} else {
@@ -287,6 +290,7 @@ void l_sentence()
 				}
 				Update(tmp[random_choice][page], typing_storage, s_process, s_livetype, 0, s_acc, index, true);
 			} else {
+				saveCorrect = correct;
 				index = 0;
 				s_acc = 0;
 				correct = 0;
@@ -329,7 +333,8 @@ void l_sentence()
 			Update(tmp[random_choice][page], typing_storage, s_process, s_livetype, 0, s_acc, index, true);
 		}
 	}
-	Render("", "통계", s_process, s_livetype, 0, s_acc, true);
+	Render("", "통계", (liveTypeMean/ (saveCorrect + correct)), s_livetype, 0, s_acc, true);
+	liveTypeMean = 0;
 	char typer = getche();
 	if(typer == '\n')
 		return;
