@@ -440,17 +440,17 @@ void place()
 			
 		}
 		else if(put==27)
-		{
-			system("clear");
+		{ 	
 			
-			return;
+			system("clear");
+			return ;
 		}
 		else {
       		while(put!=putalphabet)
 			{
 				error++;
 				totalchallenge++;
-				exact=(float)count/totalchallenge*100;
+				exact=(float)count/(totalchallenge-1)*100;
 				system("clear");
 				printf ("자리연습 \n");
 				printf("진행도:%d%%  오타수:%d  정확도:%.1f%% ",process,error,exact);
@@ -460,8 +460,9 @@ void place()
 			}
 			count++;
 			process+=5;
+			exact=(float)count/totalchallenge*100;
 		}
-		exact=(float)count/totalchallenge*100;
+	
 		
 	}
 	 if(count==20)
