@@ -46,7 +46,7 @@ void Update(char tmp[], char typing_storge[], int s_prosess, double s_livetype, 
 		printf(">> 영문 타자 연습 프로그램 : 긴 글 연습 <<\n\n");
 		printf("현재타수: %0.f 정확도: %d \n\n",s_livetype, s_acc);
 	} else {
-		printf(">> 영문 타자 연습 프로그램 : 짧은글 연습 <<\n");
+		printf(">> 영문 타자 연습 프로그램 : 짧은글 연습 <<\n\n");
 		printf("진행도: %d 현재타수: %0.f 최고타수: %0.f 정확도: %d \n\n", s_prosess, s_livetype, besttype, s_acc);
 	}
 	printf("%s\n", tmp);
@@ -186,7 +186,11 @@ void s_sentence()
 			Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, besttype, s_acc, index, false);
 		}
 	}
-	return;
+
+	Render("", "짧은글 연습 통계", s_prosess, s_livetype, besttype, s_acc, false);
+	char enter = getche();
+	if(enter == '\n')
+		return;
 }
 
 //긴글 연습
