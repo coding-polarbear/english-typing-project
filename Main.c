@@ -50,6 +50,7 @@ void Update(char tmp[], char typing_storge[], int s_prosess, double s_livetype, 
 		printf(">> 영문 타자 연습 프로그램 : 짧은글 연습 <<\n\n");
 		printf("진행도: %d 현재타수: %0.f 최고타수: %0.f 정확도: %d \n\n", s_prosess, s_livetype, besttype, s_acc);
 	}
+	printf("그만두려면 '#'키를 누르세요.\n\n");
 	printf("%s\n", tmp);
 	if(is_long) {
 		printf("\n");
@@ -69,6 +70,8 @@ void Render(char tmp[], char title[], int s_prosess, double s_livetype, double b
 	} else {
 		printf("진행도: %d 현재타수: %0.f 최고타수: %0.f 정확도: %d \n\n", s_prosess, s_livetype, besttype, s_acc);
 	}
+	if(strcmp(tmp, ""))
+		printf("그만두려면 '#'키를 누르세요.\n\n");
 	printf("%s\n", tmp);
 }
 
@@ -136,6 +139,7 @@ void s_sentence()
 	int correct = 0, temp; //맞은개수
 	double s_livetype = 0;
 
+	int meanSum = 0;
 	srand(time(NULL));
 	int random_choice = rand() % 30;
 	Render(tmp[random_choice], ">> 영문 타자 연습 프로그램 : 짧은 글 연습 <<", s_prosess, s_livetype, besttype, s_acc, false);
@@ -148,6 +152,7 @@ void s_sentence()
 		typer = getche();
 		if(typer == '\n')
 		{
+			meanSum += liveTypeMean / correct;
 			startTime = time(NULL);
 			random_choice = rand() % 30;
 			index = 0;
@@ -176,6 +181,8 @@ void s_sentence()
 				Render(tmp[random_choice], ">> 영문 타자 연습 프로그램 : 짧은 글 연습 <<", s_prosess, s_livetype, besttype, s_acc, false);
 				continue;
 			}
+		} else if(typer ==  '#') {
+			break;
 		} else {
 			typing_storge[index] = typer;
 			if(typing_storge[index] == tmp[random_choice][index]) {
@@ -189,7 +196,7 @@ void s_sentence()
 		}
 	}
 
-	Render("", "짧은글 연습 통계", s_prosess, s_livetype, besttype, s_acc, false);
+	Render("", "짧은글 연습 통계", s_prosess, meanSum/5 , besttype, s_acc, false);
 	char enter = getche();
 	if(enter == '\n')
 		return;
@@ -297,6 +304,8 @@ void l_sentence()
 				Render(tmp[random_choice][page], ">> 영문 타자 연습 프로그램 : 긴 글 연습 <<", s_process, s_livetype, 0, s_acc, true);
 				continue;
 			}
+		} else if(typer == '#') {
+			break;
 		} else  if(typer == '\n') {
 			typing_storage[index] = typer;
 			enter_count++;
