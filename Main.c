@@ -4,7 +4,7 @@
 #include <string.h>
 #include <time.h>
 #include <termios.h>
-#include<unistd.h>
+#include <unistd.h>
 
 void print_menu();
 
@@ -433,6 +433,7 @@ void place()
 		else if(put==27)
 		{
 			system("clear");
+			
 			return;
 		}
 		else {
