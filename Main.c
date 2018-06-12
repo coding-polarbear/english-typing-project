@@ -4,7 +4,7 @@
 #include <string.h>
 #include <time.h>
 #include <termios.h>
-#include<unistd.h>
+#include <unistd.h>
 
 void print_menu();
 
@@ -49,6 +49,7 @@ void Update(char tmp[], char typing_storge[], int s_prosess, double s_livetype, 
 		printf(">> 영문 타자 연습 프로그램 : 짧은글 연습 <<\n");
 		printf("진행도: %d 현재타수: %0.f 최고타수: %0.f 정확도: %d \n\n", s_prosess, s_livetype, besttype, s_acc);
 	}
+	printf("그만두려면 '#'키를 누르세요.\n\n");
 	printf("%s\n", tmp);
 	if(is_long) {
 		printf("\n");
@@ -68,6 +69,8 @@ void Render(char tmp[], char title[], int s_prosess, double s_livetype, double b
 	} else {
 		printf("진행도: %d 현재타수: %0.f 최고타수: %0.f 정확도: %d \n\n", s_prosess, s_livetype, besttype, s_acc);
 	}
+	if(strcmp(tmp, ""))
+		printf("그만두려면 '#'키를 누르세요.\n\n");
 	printf("%s\n", tmp);
 }
 
@@ -133,6 +136,7 @@ void s_sentence()
 	int correct = 0, temp; //맞은개수
 	double s_livetype = 0;
 
+	double meanSum = 0;
 	srand(time(NULL));
 	int random_choice = rand() % 30;
 	Render(tmp[random_choice], ">> 영문 타자 연습 프로그램 : 짧은 글 연습 <<", s_prosess, s_livetype, besttype, s_acc, false);
@@ -145,6 +149,8 @@ void s_sentence()
 		typer = getche();
 		if(typer == '\n')
 		{
+			meanSum += liveTypeMean / correct;
+			liveTypeMean = 0;
 			startTime = time(NULL);
 			random_choice = rand() % 30;
 			index = 0;
@@ -173,6 +179,8 @@ void s_sentence()
 				Render(tmp[random_choice], ">> 영문 타자 연습 프로그램 : 짧은 글 연습 <<", s_prosess, s_livetype, besttype, s_acc, false);
 				continue;
 			}
+		} else if(typer ==  '#') {
+			break;
 		} else {
 			typing_storge[index] = typer;
 			if(typing_storge[index] == tmp[random_choice][index]) {
@@ -185,7 +193,15 @@ void s_sentence()
 			Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, besttype, s_acc, index, false);
 		}
 	}
+<<<<<<< HEAD
 	print_menu();
+=======
+
+	Render("", "짧은글 연습 통계", s_prosess, meanSum/5 , besttype, s_acc, false);
+	char enter = getche();
+	if(enter == '\n')
+		return;
+>>>>>>> e1b01316b48558e3b171a75a291573c17d930c1a
 }
 
 //긴글 연습
@@ -288,6 +304,8 @@ void l_sentence()
 				Render(tmp[random_choice][page], ">> 영문 타자 연습 프로그램 : 긴 글 연습 <<", s_process, s_livetype, 0, s_acc, true);
 				continue;
 			}
+		} else if(typer == '#') {
+			break;
 		} else  if(typer == '\n') {
 			typing_storage[index] = typer;
 			enter_count++;
@@ -427,16 +445,21 @@ void place()
 			
 		}
 		else if(put==27)
-		{
+		{ 	
+			
 			system("clear");
+<<<<<<< HEAD
 			print_menu();
+=======
+			return ;
+>>>>>>> e1b01316b48558e3b171a75a291573c17d930c1a
 		}
 		else {
       		while(put!=putalphabet)
 			{
 				error++;
 				totalchallenge++;
-				exact=(float)count/totalchallenge*100;
+				exact=(float)count/(totalchallenge-1)*100;
 				system("clear");
 				printf ("자리연습 \n");
 				printf("진행도:%d%%  오타수:%d  정확도:%.1f%% ",process,error,exact);
@@ -446,8 +469,9 @@ void place()
 			}
 			count++;
 			process+=5;
+			exact=(float)count/totalchallenge*100;
 		}
-		exact=(float)count/totalchallenge*100;
+	
 		
 	}
 	 if(count==20)
