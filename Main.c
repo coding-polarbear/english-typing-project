@@ -37,8 +37,7 @@ char getche(void){
 }//위의 것들은 getche를 linux환경에서 헤더없이 구현하기위해 삽입.
 int tmp;
 
-double besttype = 0, liveTypeMean = 0;
-int saveCorrect;
+double besttype = 0;
 
 void Update(char tmp[], char typing_storge[], int s_prosess, double s_livetype, double besttype, int s_acc, int index, bool is_long) 
 {
@@ -47,7 +46,7 @@ void Update(char tmp[], char typing_storge[], int s_prosess, double s_livetype, 
 		printf(">> 영문 타자 연습 프로그램 : 긴 글 연습 <<\n\n");
 		printf("현재타수: %0.f 정확도: %d \n\n",s_livetype, s_acc);
 	} else {
-		printf(">> 영문 타자 연습 프로그램 : 짧은글 연습 <<\n\n");
+		printf(">> 영문 타자 연습 프로그램 : 짧은글 연습 <<\n");
 		printf("진행도: %d 현재타수: %0.f 최고타수: %0.f 정확도: %d \n\n", s_prosess, s_livetype, besttype, s_acc);
 	}
 	printf("%s\n", tmp);
@@ -83,13 +82,11 @@ void wordscreen(char tmp[], char title[], int process, int wrong, float acc)
 
 double Livetype(int correct, time_t startTime, time_t endTime)
 {
-	if(startTime == endTime) return 0;
 	double type =  (correct * 60) / (double)(endTime - startTime); //시간에서 입력한 타자수를 곱함
 	if(type > besttype)
 	{
 		besttype = type;
 	}
-	liveTypeMean += type;
 	return type;
 }
 
@@ -188,11 +185,7 @@ void s_sentence()
 			Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, besttype, s_acc, index, false);
 		}
 	}
-
-	Render("", "짧은글 연습 통계", s_prosess, s_livetype, besttype, s_acc, false);
-	char enter = getche();
-	if(enter == '\n')
-		return;
+	print_menu();
 }
 
 //긴글 연습
@@ -234,7 +227,7 @@ void l_sentence()
 
 			"I suppose one more lifetime wouldn't kill anyone.\n"
 			"Well, except me.\n"
-			"You wait a moment, Doctor. Let's get it right.\n"
+			" You wait a moment, Doctor. Let's get it right.\n"
 			"I've got a few things to say to you.\n"
 			"Basic stuff first.\n" 
 		},
@@ -282,7 +275,6 @@ void l_sentence()
 				}
 				index--;
 				if(index == 0) {
-					saveCorrect = correct;
 					correct = 0;
 					s_acc = 0;
 				} else {
@@ -290,7 +282,6 @@ void l_sentence()
 				}
 				Update(tmp[random_choice][page], typing_storage, s_process, s_livetype, 0, s_acc, index, true);
 			} else {
-				saveCorrect = correct;
 				index = 0;
 				s_acc = 0;
 				correct = 0;
@@ -333,11 +324,10 @@ void l_sentence()
 			Update(tmp[random_choice][page], typing_storage, s_process, s_livetype, 0, s_acc, index, true);
 		}
 	}
-	Render("", "통계", (liveTypeMean/ (saveCorrect + correct)), s_livetype, 0, s_acc, true);
-	liveTypeMean = 0;
+	Render("", "통계", s_process, s_livetype, 0, s_acc, true);
 	char typer = getche();
 	if(typer == '\n')
-		return;
+		print_menu();
 
 }
 
@@ -357,10 +347,11 @@ void word()
 		"to","two","up","use","very","want","way","we","well","what",
 		"when","which","who","will","with","would","year","you","your","zebra"};//100개 단어
 
-	int process=0, wrong=0, cnt =1;//진행도, 오타수, 횟수
+	int process=0, wrong=0, cnt =0;//진행도, 오타수, 횟수
 	float acc=100;//진행도
 	int x; 
-	char typer[100];
+	char typer[]={0};//입력할 단어 배열
+	
 
 	printf("\n\n");
 
@@ -368,21 +359,17 @@ void word()
 		x = rand()%100;
 		wordscreen(tmp[x], ">>영문 타자 연습 프로그램 : 낱말 연습<<",process,wrong,acc);//낱말연습 스크린 띄우기 함수
 		scanf("%s", typer);
+		
 
-		if(strcmp(tmp[x],typer) == 0){//랜덤으로 돌린 단어와 입력한 단어가 일치했을 때.
-			process+=5;//진행도 증가
-			cnt++;//횟수 증가
-			continue;
-		}
+		if(strcmp(tmp[x],typer) != 0) wrong++; //랜덤으로 돌린단어와 입력한 단어가 틀렸을 때
 		else if(strcmp(typer, "###") == 0){
 			break;
 		}//###입력했을때 메뉴 복귀
-		else {//랜덤으로 돌린단어와 입력한 단어가 틀렸을 때
-			process+=5;
-			wrong++;
-			cnt++;
-		}
-		acc=100-(float)wrong/20*100;//진행도
+		
+		process+=5;
+		cnt++;
+		
+		acc=((((float)cnt - wrong)/cnt)*100);
 	}
 	
 	wordscreen("", ">> 영문 타자 연습 프로그램 : 낱말 연습 통계<<",process,wrong,acc);//통계
@@ -442,7 +429,7 @@ void place()
 		else if(put==27)
 		{
 			system("clear");
-			return;
+			print_menu();
 		}
 		else {
       		while(put!=putalphabet)
@@ -473,7 +460,7 @@ void place()
 	put=getche();
 		if(put=='\n')
 		{
-			return;
+		print_menu();
 		}
 	}
 
@@ -482,38 +469,36 @@ void place()
 
 void print_menu()
 {
-	int menu = 0;
-	while(menu != 5) {
-		system("clear");
-		printf("	   >>영어 타자 연습<<		\n");
-		printf("1. 자리수 연습		2. 낱말 연습\n");
-		printf("3. 짧은글 연습		4. 긴글 연습\n");
-		printf("5. 프로그램 종료\n");
-		printf("번호를 선택하세요: ");
-		scanf("%d", &menu);
-		getchar();
-		switch(menu)
-		{
-			case 1:
-				system("clear");
-				place();
-				break;
-			case 2:
-				system("clear");
-				word();
-				break;
-			case 3:
-				system("clear");
-				s_sentence();
-				break;
-			case 4:
-				system("clear");
-				l_sentence();
-				break;
-			default:
-				system("clear");
-				break;
-		}
+	int menu;
+	system("clear");
+	printf("	   >>영어 타자 연습<<		\n");
+	printf("1. 자리수 연습		2. 낱말 연습\n");
+	printf("3. 짧은글 연습		4. 긴글 연습\n");
+	printf("5. 프로그램 종료\n");
+	printf("번호를 선택하세요: ");
+	scanf("%d", &menu);
+	getchar();
+	switch(menu)
+	{
+		case 1:
+			system("clear");
+			place();
+			break;
+		case 2:
+			system("clear");
+			word();
+			break;
+		case 3:
+			system("clear");
+			s_sentence();
+			break;
+		case 4:
+			system("clear");
+			l_sentence();
+			break;
+		default:
+			system("clear");
+			break;
 	}
 }
 
