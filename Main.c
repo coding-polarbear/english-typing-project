@@ -358,7 +358,7 @@ void word()
 	while(cnt<=20){//20회까지 실행
 		x = rand()%100;
 		wordscreen(tmp[x], ">>영문 타자 연습 프로그램 : 낱말 연습<<",process,wrong,acc);//낱말연습 스크린 띄우기 함수
-		scanf("%s", typer);
+		scanf("%s", typer);//입력한 단어 출력
 		
 
 		if(strcmp(tmp[x],typer) != 0) wrong++; //랜덤으로 돌린단어와 입력한 단어가 틀렸을 때
@@ -367,9 +367,9 @@ void word()
 		}//###입력했을때 메뉴 복귀
 		
 		process+=5;
-		cnt++;
+		cnt++;//진행도와 횟수 카운트
 		
-		acc=((((float)cnt - wrong)/cnt)*100);
+		acc=((((float)cnt - wrong)/cnt)*100);//정확도 계산
 	}
 	
 	wordscreen("", ">> 영문 타자 연습 프로그램 : 낱말 연습 통계<<",process,wrong,acc);//통계
