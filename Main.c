@@ -49,7 +49,7 @@ void Update(char tmp[], char typing_storge[], int s_prosess, double s_livetype, 
 		printf("현재타수: %0.f 정확도: %d \n\n",s_livetype, s_acc);
 	} else {
 		printf(">> 영문 타자 연습 프로그램 : 짧은글 연습 <<\n");
-		printf("진행도: %d 현재타수: %0.f 최고타수: %0.f 정확도: %d \n\n", s_prosess, s_livetype, besttype, s_acc);
+		printf("진행도: %d%% 현재타수: %0.f 최고타수: %0.f 정확도: %d%% \n\n", s_prosess, s_livetype, besttype, s_acc);
 	}
 	printf("그만두려면 '#'키를 누르세요.\n\n");
 	printf("%s\n", tmp);
@@ -72,9 +72,9 @@ void Render(char tmp[], char title[], int s_prosess, double s_livetype, double b
 	if(is_long) {
 		printf("현재타수: %0.f 정확도: %d \n\n",s_livetype, s_acc);
 	} else {
-		printf("진행도: %d 현재타수: %0.f 최고타수: %0.f 정확도: %d \n\n", s_prosess, s_livetype, besttype, s_acc);
+		printf("진행도: %d%% 현재타수: %0.f 최고타수: %0.f 정확도: %d%% \n\n", s_prosess, s_livetype, besttype, s_acc);
 	}
-	if(strcmp(tmp, ""))
+	if(strcmp(tmp, "#"))
 		printf("그만두려면 '#'키를 누르세요.\n\n");
 	printf("%s\n", tmp);
 }
@@ -202,7 +202,7 @@ void s_sentence()
 			Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, besttype, s_acc, index, false); //바뀐 정보 업데이트
 		}
 	}
-	Render("", "통계", meanSum/5, s_livetype, 0, s_acc, true); // 마지막 통계 각줄의 모든 타수 / 5 로 평균 타수 반영
+	Render("", ">> 영문 타자 연습 프로그램 : 짧은 글 연습 통계<<", meanSum/5, s_livetype, 0, s_acc, true); // 마지막 통계 각줄의 모든 타수 / 5 로 평균 타수 반영
 	char typer = getche();
 	if(typer == '\n')
 		return; 
@@ -348,15 +348,15 @@ void l_sentence()
 			Update(tmp[random_choice][page], typing_storage, s_process, s_livetype, 0, s_acc, index, true); // 변경사항의 업데이트
 		}
 	}
-	Render("", "통계", s_process, liveTypeSum / (correct + correct_tmp), 0, s_acc, true); // 마지막 통계를 띄움
+	Render("", ">> 영문 타자 연습 프로그램 : 긴 글 연습 통계<<", s_process, liveTypeSum / (correct + correct_tmp), 0, s_acc, true); // 마지막 통계를 띄움
 	char typer = getche();
 	if(typer == '\n')
 		return;
 
 }
 
-//낱말 연습
-void word()
+//낱말 연습 20180343 허예은 만듦.
+void word()//20180343  
 {
 	srand(time(NULL));
 	char tmp[100][100]={
@@ -372,7 +372,7 @@ void word()
 		"when","which","who","will","with","would","year","you","your","zebra"};//100개 단어
 
 	int process=0, wrong=0, cnt =0;//진행도, 오타수, 횟수
-	float acc=100;//진행도
+	float acc=100;//정확도
 	int x; 
 	char typer[]={0};//입력할 단어 배열
 	
@@ -385,23 +385,33 @@ void word()
 		scanf("%s", typer);//입력한 단어 출력
 		
 
-		if(strcmp(tmp[x],typer) != 0) wrong++; //랜덤으로 돌린단어와 입력한 단어가 틀렸을 때
-		else if(strcmp(typer, "###") == 0){
-			break;
-		}//###입력했을때 메뉴 복귀
-		
-		process+=5;
-		cnt++;//진행도와 횟수 카운트
-		
-		acc=((((float)cnt - wrong)/cnt)*100);//정확도 계산
-	}
+		if(strcmp(tmp[x],typer) == 0){//랜덤으로 돌린 단어와 입력한 단어가 일치했을 때.
+ 			process+=5;//진행도 증가
+ 			cnt++;//횟수 증가
+			acc=((((float)cnt - wrong)/cnt)*100);
+			continue;
+
+ 		}
+ 		else if(strcmp(typer, "###") == 0){
+ 			break;
+
+ 		}//###입력했을때 메뉴 복귀
+		 
+ 		else {//랜덤으로 돌린단어와 입력한 단어가 틀렸을 때
+ 			process+=5;
+ 			wrong++;
+ 			cnt++;
+ 		}
+ 		acc=((((float)cnt - wrong)/cnt)*100);//진행도
+ 	}
 	
 	wordscreen("", ">> 영문 타자 연습 프로그램 : 낱말 연습 통계<<",process,wrong,acc);//통계
 	char put;
 	getche();
 	put = getche();
 	if(put=='\n'){
-		return;
+		system("clear");
+		print_menu();
 	}//엔터치면 메뉴 돌아가기 
 
 }
@@ -409,7 +419,7 @@ void word()
 
 
 
-//자수 연습
+//자수 연습 정연우 만듦
 void place()
 {  
 	float exact =0; //정확도
@@ -480,7 +490,7 @@ void place()
 	 if(count==20)//20번째가 되었을때 통계를 보여준다
  	{
    	system("clear");
-   	printf ("자리연습 \n");
+   	printf (">> 영문 타자 연습 프로그램 : 자리 연습 통계 \n");
   	printf("진행도:%d%%  오타수:%d  정확도:%.1f%% ",process,error,exact);
 	printf("\n");
 	char put;
@@ -510,23 +520,23 @@ void print_menu()
 		case 1:
 			system("clear");
 			place();
-			break;
+			break;//1을 눌렀을 때 창을 지우고 자리 연습으로 가기
 		case 2:
 			system("clear");
 			word();
-			break;
+			break;//2를 눌렀을 때 창을 지우고 낱말 연습으로 가기
 		case 3:
 			system("clear");
 			s_sentence();
-			break;
+			break;////3을 눌렀을 때 창을 지우고 짧은 글 연습으로 가기
 		case 4:
 			system("clear");
 			l_sentence();
-			break;
+			break;//4를 눌렀을 때 창을 지우고 긴 글 연습으로 가기
 		default:
 			system("clear");
 			break;
-	}
+	}////5을 눌렀을 때 프로그램이 종료되고 화면이 클리어  
 }
 
 int main()
