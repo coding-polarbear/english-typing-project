@@ -132,11 +132,11 @@ void s_sentence()
 
 	char typer, typing_storge[200];
 	int s_prosess = 0, s_acc = 0; // 진행도, 타수, 최고타수, 정확도
-	int index = 0;
+	int index = 0; // 입력한 글자 수
 	int correct = 0, temp; //맞은개수
-	double s_livetype = 0;
+	double s_livetype = 0; 
 
-	double meanSum = 0;
+	double meanSum = 0; //평균
 	srand(time(NULL));
 	int random_choice = rand() % 30;
 	Render(tmp[random_choice], ">> 영문 타자 연습 프로그램 : 짧은 글 연습 <<", s_prosess, s_livetype, besttype, s_acc, false);
@@ -144,56 +144,55 @@ void s_sentence()
 	time_t startTime, endTime;
 	startTime = time(NULL);
 
-	while (s_prosess != 100)
+	while (s_prosess != 100) //진행도가 100이 아닌 동안 반복
 	{
-		typer = getche();
-		if(typer == '\n')
+		typer = getche();	//글자 입력
+		if(typer == '\n') // 입력한 글자가 엔터인 경우
 		{
 			meanSum += liveTypeMean / correct;
 			liveTypeMean = 0;
 			startTime = time(NULL);
-			random_choice = rand() % 30;
-			index = 0;
-			correct = 0;
-			s_acc = 0;
-			s_prosess += 20;
-			Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, besttype, s_acc, index, false);
+			random_choice = rand() % 30; // 새롭게 글을 불러오기 위해 0 ~ 30 사이의 수를 랜덤하게 생성
+			index = 0; //입력한 글자 수 초기화
+			correct = 0; //맞은 글자 수 초기화
+			s_acc = 0; //정확도 초기화
+			s_prosess += 20; //진행도 20 증가
+			Render(tmp[random_choice], ">> 영문 타자 연습 프로그램 : 짧은 글 연습 <<", s_prosess, s_livetype, besttype, s_acc, false); // 새로 렌더링
 		}
-		else if(typer == 127 || typer == 8) {
-			if(index > 0) {
-				if(tmp[random_choice][index -1] == typing_storge[index -1]) {
+		else if(typer == 127 || typer == 8) { // 입력한 글자가 백스페이스일 경우
+			if(index > 0) { // index가 0보다 큰 경우 
+				if(tmp[random_choice][index -1] == typing_storge[index -1]) { //백스페이스 누르기 직전에 입력한 글자가 맞는 글자일 경우 correct에서 1을 뺌.
 					correct--;
 				}
-				index--;
-				if(index == 0) {
-					correct = 0;
-					s_acc = 0;
+				index--; //인덱스 값을 1 뺌
+				if(index == 0) { //인덱스가 0인 경우
+					correct = 0; //맞은 글자 개수 0으로 초기화
+					s_acc = 0; //정확도 0으로 초기화
 				} else {
-					s_acc = ((float) correct / index) * 100;
+					s_acc = ((float) correct / index) * 100; //정확도 다시 계산
 				}
-				Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, besttype, s_acc, index, false);
-			} else {
-				index = 0;
-				s_acc = 0;
-				correct = 0;
-				Render(tmp[random_choice], ">> 영문 타자 연습 프로그램 : 짧은 글 연습 <<", s_prosess, s_livetype, besttype, s_acc, false);
+				Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, besttype, s_acc, index, false); //바뀐 정보 업데이트
+			} else { //인덱스가 0이거나 0보다 작을 경우
+				index = 0; //인덱스값 0으로 초기화
+				s_acc = 0; //정확도 0으로 초기화
+				correct = 0; //맞은 글자 개수 0으로 초기화
+				Render(tmp[random_choice], ">> 영문 타자 연습 프로그램 : 짧은 글 연습 <<", s_prosess, s_livetype, besttype, s_acc, false); //새로 렌더링
 				continue;
 			}
-		} else if(typer ==  '#') {
-			break;
-		} else {
-			typing_storge[index] = typer;
-			if(typing_storge[index] == tmp[random_choice][index]) {
-				correct++;
-			}
-			index++;
+		} else if(typer ==  '#') { //입력한 글자가 #이면
+			break; // while loop를 삐져나감
+		} else { //일반 글자를 입력했을 경우
+			typing_storge[index] = typer; //입력 버퍼에 현재 입력한 글자를 넣음
+			if(typing_storge[index] == tmp[random_choice][index]) { //입력한 글자가 맞은 경우
+				correct++; //맞은 글자 수 증가
+			} 
+			index++; //인덱스 추가
 			endTime = time(NULL);
-			s_livetype = Livetype(correct, startTime, endTime);
-			s_acc = ((float) correct / index) * 100;
-			Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, besttype, s_acc, index, false);
+ 			s_livetype = Livetype(correct, startTime, endTime); //타수 계산
+			s_acc = ((float) correct / index) * 100; //정확도 다시 계산
+			Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, besttype, s_acc, index, false); //바뀐 정보 업데이트
 		}
 	}
-	print_menu();
 }
 
 //긴글 연습
@@ -337,7 +336,7 @@ void l_sentence()
 	Render("", "통계", s_process, s_livetype, 0, s_acc, true);
 	char typer = getche();
 	if(typer == '\n')
-		print_menu();
+		return;
 
 }
 
