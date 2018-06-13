@@ -37,12 +37,14 @@ char getche(void){
 }//위의 것들은 getche를 linux환경에서 헤더없이 구현하기위해 삽입.
 int tmp;
 
-double besttype = 0;
 
-void Update(char tmp[], char typing_storge[], int s_prosess, double s_livetype, double besttype, int s_acc, int index, bool is_long) 
+double besttype = 0; //최고 타수 전역변수
+
+void Update(char tmp[], char typing_storge[], int s_prosess, double s_livetype, double besttype, int s_acc, int index, bool is_long) // 하나씩 칠때마다 변경사항을 출력하기 위한 업데이트 함수
 {
+	// tmp[]: 예문, typing_storge[]: 입력을 담아두는 배열, s_prosess: 진행도, s_livetype: 현재 타수, besttype: 최고 타수, s_acc: 정확도, index: 사용자가 입력한 문자 개수를 담는 인덱스, is_long: 긴글 여부를 판별
 	system("clear");
-	if(is_long) {
+	if(is_long) { // 긴글 연습 채크 
 		printf(">> 영문 타자 연습 프로그램 : 긴 글 연습 <<\n\n");
 		printf("현재타수: %0.f 정확도: %d \n\n",s_livetype, s_acc);
 	} else {
@@ -54,13 +56,14 @@ void Update(char tmp[], char typing_storge[], int s_prosess, double s_livetype, 
 	if(is_long) {
 		printf("\n");
 	}
-	for(int i = 0; i < index; i++) 
+	for(int i = 0; i < index; i++) // typing_storge배열에서 index 까지만 출력을 위한 반복문
 		printf("%c", typing_storge[i]);
 	// printf("%s", typing_storge);
 }
 
-void Render(char tmp[], char title[], int s_prosess, double s_livetype, double besttype, int s_acc, bool is_long)
+void Render(char tmp[], char title[], int s_prosess, double s_livetype, double besttype, int s_acc, bool is_long) // 처음 필요한 창을 띄우기 위한 업데이트 함수
 {
+	// tmp[]:예문, title[]: 제목, s_prosess: 진행도, s_livetype: 현재타수, besttype: 최고타서, s_acc: 정확도, is_long: 긴글 여부 판별
 	system("clear");
 	printf("%s\n", title);
 	printf("\n");
@@ -74,8 +77,9 @@ void Render(char tmp[], char title[], int s_prosess, double s_livetype, double b
 	printf("%s\n", tmp);
 }
 
-void wordscreen(char tmp[], char title[], int process, int wrong, float acc)
+void wordscreen(char tmp[], char title[], int process, int wrong, float acc) // 단어 화면을 띄우기 위한 함수
 {
+	// tmp[]: 예문, title[]: 제목, process: 진행도, wrong: 오타수, acc: 정확도
 	int typer;
 	system("clear");
 	printf("%s\n", title);
@@ -83,17 +87,19 @@ void wordscreen(char tmp[], char title[], int process, int wrong, float acc)
 	printf("%s\n", tmp);
 }
 
-double Livetype(int correct, time_t startTime, time_t endTime)
+double Livetype(int correct, time_t startTime, time_t endTime) // 분당 타수를 계산하기 위한 함숨
 {
-	double type =  (correct * 60) / (double)(endTime - startTime); //시간에서 입력한 타자수를 곱함
-	if(type > besttype)
+	// correct: 맞은 문자 개수, startTime: 입력을 받기전 시간, endTime: 입력을 받은 시간
+
+	double type =  (correct * 60) / (double)(endTime - startTime); // 맞은 문자 * 60 / 걸린 시간
+	if(type > besttype) //최고 타수를 업데이트 하기위한 if문
 	{
 		besttype = type;
 	}
 	return type;
 }
 
-//짧은글 연습g
+//짧은글 연습
 void s_sentence()
 {
 	char tmp[40][200] = {
@@ -130,27 +136,24 @@ void s_sentence()
 		"Make hay while the sun shines."
 	};
 
-	char typer, typing_storge[200];
-	int s_prosess = 0, s_acc = 0; // 진행도, 타수, 최고타수, 정확도
-	int index = 0;
-	int correct = 0, temp; //맞은개수
-	double s_livetype = 0;
-
-	double meanSum = 0;
+	char typer, typing_storge[200]; // typer: 한글자씩 입력받음
+	int s_prosess = 0, s_acc = 0, index = 0, correct = 0, liveTypeMean = 0, temp; // 진행도, 정확도, 인덱스, 맞은개, 임시저장 변수
+	double s_livetype = 0, meanSum = 0; // 현재 타수, meanSum: 현재 타수를 계산하기 위한 현재타수 저장 변수
+	
 	srand(time(NULL));
 	int random_choice = rand() % 30;
 	Render(tmp[random_choice], ">> 영문 타자 연습 프로그램 : 짧은 글 연습 <<", s_prosess, s_livetype, besttype, s_acc, false);
 
 	time_t startTime, endTime;
-	startTime = time(NULL);
+	startTime = time(NULL); // 맨저음 시간을 재기 시작
 
 	while (s_prosess != 100)
 	{
 		typer = getche();
-		if(typer == '\n')
+		if(typer == '\n') // 엔터
 		{
-			meanSum += liveTypeMean / correct;
-			liveTypeMean = 0;
+			meanSum += liveTypeMean / correct; // meanSum 변수에 한줄에 걸린 분당타수의 평균을 더함
+			liveTypeMean = 0; 
 			startTime = time(NULL);
 			random_choice = rand() % 30;
 			index = 0;
@@ -159,13 +162,13 @@ void s_sentence()
 			s_prosess += 20;
 			Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, besttype, s_acc, index, false);
 		}
-		else if(typer == 127 || typer == 8) {
+		else if(typer == 127 || typer == 8) { // 벡스페이스
 			if(index > 0) {
 				if(tmp[random_choice][index -1] == typing_storge[index -1]) {
 					correct--;
 				}
 				index--;
-				if(index == 0) {
+				if(index == 0) { 
 					correct = 0;
 					s_acc = 0;
 				} else {
@@ -179,29 +182,26 @@ void s_sentence()
 				Render(tmp[random_choice], ">> 영문 타자 연습 프로그램 : 짧은 글 연습 <<", s_prosess, s_livetype, besttype, s_acc, false);
 				continue;
 			}
-		} else if(typer ==  '#') {
+		} else if(typer ==  '#') { // #을 누를경우 중간에 종료됨
 			break;
 		} else {
-			typing_storge[index] = typer;
+			typing_storge[index] = typer; // 입력을 typing_storge에 저장
 			if(typing_storge[index] == tmp[random_choice][index]) {
-				correct++;
+				correct++; // 맞는 문장일경우 correct 1증가
 			}
 			index++;
-			endTime = time(NULL);
-			s_livetype = Livetype(correct, startTime, endTime);
-			s_acc = ((float) correct / index) * 100;
+			endTime = time(NULL); // 끝나는 시간을 받음
+			s_livetype = Livetype(correct, startTime, endTime); // 현재타수의 계산
+			liveTypeMean += s_livetype;
+			s_acc = ((float) correct / index) * 100; // 정확도의 계산
 			Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, besttype, s_acc, index, false);
 		}
 	}
-<<<<<<< HEAD
-	print_menu();
-=======
-
-	Render("", "짧은글 연습 통계", s_prosess, meanSum/5 , besttype, s_acc, false);
+	// 마지막 통걔 출력을 위한 렌더함수 호출
+	Render("", "짧은글 연습 통계", s_prosess, meanSum/5 , besttype, s_acc, false); // 각 문장 마다의 평균 타수의 합계를 5로 나누어 평균타수를 구함
 	char enter = getche();
 	if(enter == '\n')
-		return;
->>>>>>> e1b01316b48558e3b171a75a291573c17d930c1a
+		print_menu(); // 메뉴로 복귀
 }
 
 //긴글 연습
@@ -262,10 +262,10 @@ void l_sentence()
 
 		}
 	};
-	int enter_count = 0;
-	int s_process = 0, correct = 0, s_acc = 0;
+	int enter_count = 0; // 다음 페이지로 넘기기 위한 엔터 카운터
+	int s_process = 0, correct = 0, s_acc = 0, livetypeMean = 0; // 진행도, 맞은 문자 개수, 정확도
 	int index = 0;
-	int page = 0;
+	int page = 0; // 페이지
 	int count = 1;
 	srand(time(NULL));
 	int random_choice = rand() % 4;
@@ -274,14 +274,14 @@ void l_sentence()
 	double s_livetype = 0;
 	time_t startTime, endTime;
 	
-	startTime = time(NULL);
+	startTime = time(NULL); // 시작시간을 가져옴
 
 	printf("\n");
 	char typing_storage[400];
 
 	while(s_process != 100) {
 		char typer = getche();
-		if(typer == 127 || typer == 8) {
+		if(typer == 127 || typer == 8) { // 백스페이스
 			if(index > 0) {
 				if(tmp[random_choice][page][index -1] == typing_storage[index -1]) {
 					correct--;
@@ -304,19 +304,20 @@ void l_sentence()
 				Render(tmp[random_choice][page], ">> 영문 타자 연습 프로그램 : 긴 글 연습 <<", s_process, s_livetype, 0, s_acc, true);
 				continue;
 			}
-		} else if(typer == '#') {
+		} else if(typer == '#') { // #을 누를시 중간에 끝냄
 			break;
 		} else  if(typer == '\n') {
 			typing_storage[index] = typer;
 			enter_count++;
-			if(enter_count >= 5) {
+			if(enter_count >= 5) { // 엔터 카운터가 5보다 클경우에
+				// 변수를 0으로 초기화
 				enter_count = 0;
 				index = 0;
 				correct = 0;
-				if(page == 0) {
-					startTime = time(NULL);
+				if(page == 0) { // 첫번째 페이지인 경우에
+					startTime = time(NULL); // 시간을 다시 재고
 					s_acc = 0;
-					page++;
+					page++; // 페이지를 넘김
 					Render(tmp[random_choice][page], ">> 영문 타자 연습 프로그램 : 긴 글 연습 <<", s_process, s_livetype, 0, s_acc, true);
 				} else {
 					break;
@@ -335,14 +336,15 @@ void l_sentence()
 			if(typing_storage[index] == tmp[random_choice][page][index]) {
 				correct++;
 			}
-			endTime = time(NULL);
-			s_livetype = Livetype(correct, startTime, endTime);
+			endTime = time(NULL); // 입력 받은 시간을 받음
+			s_livetype = Livetype(correct, startTime, endTime); //현재 타수 계산을 위해 함수 호출
+			livetypeMean += s_livetype; // 평균을 구하기위해 변수에 현재타수 저장
 			index++;
 			s_acc = ((float)correct / index) * 100;
 			Update(tmp[random_choice][page], typing_storage, s_process, s_livetype, 0, s_acc, index, true);
 		}
 	}
-	Render("", "통계", s_process, s_livetype, 0, s_acc, true);
+	Render("", "통계", livetypeMean / sizeof(typing_storage), s_livetype, 0, s_acc, true);
 	char typer = getche();
 	if(typer == '\n')
 		print_menu();
@@ -448,11 +450,8 @@ void place()
 		{ 	
 			
 			system("clear");
-<<<<<<< HEAD
 			print_menu();
-=======
 			return ;
->>>>>>> e1b01316b48558e3b171a75a291573c17d930c1a
 		}
 		else {
       		while(put!=putalphabet)
