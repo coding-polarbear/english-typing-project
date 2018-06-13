@@ -469,6 +469,11 @@ void place()
 				printf("\n\n");
 				printf("%c\n",putalphabet);
 				put=getche();
+				if(put==27) //'ESC'를 입력했을 경우
+				{	 	
+				system("clear");
+				print_menu();
+				}
 			}
 			count++;
 			process+=5;
