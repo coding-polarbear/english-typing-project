@@ -46,7 +46,7 @@ void Update(char tmp[], char typing_storge[], int s_prosess, double s_livetype, 
 	system("clear");
 	if(is_long) {
 		printf(">> 영문 타자 연습 프로그램 : 긴 글 연습 <<\n\n");
-		printf("현재타수: %0.f 정확도: %d \n\n",s_livetype, s_acc);
+		printf("현재타수: %0.f%% 정확도: %d \n\n",s_livetype, s_acc);
 	} else {
 		printf(">> 영문 타자 연습 프로그램 : 짧은글 연습 <<\n");
 		printf("진행도: %d%% 현재타수: %0.f 최고타수: %0.f 정확도: %d%% \n\n", s_prosess, s_livetype, besttype, s_acc);
@@ -70,7 +70,7 @@ void Render(char tmp[], char title[], int s_prosess, double s_livetype, double b
 	printf("%s\n", title);
 	printf("\n");
 	if(is_long) {
-		printf("현재타수: %0.f 정확도: %d \n\n",s_livetype, s_acc);
+		printf("정확도: %d% 현재타수: %0.f \n\n", s_acc, s_livetype);
 	} else {
 		printf("진행도: %d%% 현재타수: %0.f 최고타수: %0.f 정확도: %d%% \n\n", s_prosess, s_livetype, besttype, s_acc);
 	}
@@ -173,6 +173,8 @@ void s_sentence()
 				if(tmp[random_choice][index -1] == typing_storge[index -1]) { //백스페이스 누르기 직전에 입력한 글자가 맞는 글자일 경우 correct에서 1을 뺌.
 					correct--;
 				}
+				s_livetype = Livetype(correct, startTime, endTime);
+				liveTypeSum += s_livetype;
 				index--; //인덱스 값을 1 뺌
 				if(index == 0) { //인덱스가 0인 경우
 					correct = 0; //맞은 글자 개수 0으로 초기화
@@ -203,7 +205,7 @@ void s_sentence()
 			Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, besttype, s_acc, index, false); //바뀐 정보 업데이트
 		}
 	}
-	Render("", ">> 영문 타자 연습 프로그램 : 짧은 글 연습 통계<<", meanSum/5, s_livetype, 0, s_acc, false); // 마지막 통계 각줄의 모든 타수 / 5 로 평균 타수 반영
+	Render("", ">> 영문 타자 연습 프로그램 : 짧은 글 연습 통계<<", s_prosess, meanSum/5, besttype, s_acc, false); // 마지막 통계 각줄의 모든 타수 / 5 로 평균 타수 반영
 	char typer = getche();
 	if(typer == '\n')
 		return; 
@@ -292,6 +294,8 @@ void l_sentence()
 				if(tmp[random_choice][page][index -1] == typing_storage[index -1]) { // 지운 글자가 맞는 글자이면 correct--;
 					correct--;
 				}
+				s_livetype = Livetype(correct, startTime, endTime);
+				liveTypeSum += s_livetype;
 				if(typing_storage[index -1] == '\n') { // 지운 글자가 엔터일 경우 enter_cont--;
 					enter_count--;
 				}
@@ -312,7 +316,6 @@ void l_sentence()
 				continue;
 			}
 		} else if(typer == '#') { // #을 입력 받을시 반복문 탈출
-			printf("asdf");
 			break;
 		} else if(typer == '\n') { // 엔터를 입력한 경우
 			typing_storage[index] = typer;
@@ -345,12 +348,13 @@ void l_sentence()
 			}
 			endTime = time(NULL); // 입력한 시간
 			s_livetype = Livetype(correct, startTime, endTime); // 현재 타수 계산
+			liveTypeSum += s_livetype;
 			index++; // 입력한 글자수 증가
 			s_acc = ((float)correct / index) * 100; // 정확도의 계산
 			Update(tmp[random_choice][page], typing_storage, s_process, s_livetype, 0, s_acc, index, true); // 변경사항의 업데이트
 		}
 	}
-	Render("", ">> 영문 타자 연습 프로그램 : 긴 글 연습 통계<<", s_process, liveTypeSum / (correct + correct_tmp), 0, s_acc, true); // 마지막 통계를 띄움
+	Render("", ">> 영문 타자 연습 프로그램 : 긴 글 연습 통계<<", s_process, liveTypeSum / (correct + correct_tmp), besttype, s_acc, true); // 마지막 통계를 띄움
 	char typer = getche();
 	if(typer == '\n')
 		return; 
