@@ -74,9 +74,10 @@ void Render(char tmp[], char title[], int s_prosess, double s_livetype, double b
 	} else {
 		printf("진행도: %d%% 현재타수: %0.f 최고타수: %0.f 정확도: %d%% \n\n", s_prosess, s_livetype, besttype, s_acc);
 	}
-	if(strcmp(tmp, "#"))
+	if(strcmp(tmp, "")) {
 		printf("그만두려면 '#'키를 누르세요.\n\n");
-	printf("%s\n", tmp);
+		printf("%s\n", tmp);
+	}
 }
 
 // 낱말 화면 띄우기 위한 합수
@@ -202,7 +203,7 @@ void s_sentence()
 			Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, besttype, s_acc, index, false); //바뀐 정보 업데이트
 		}
 	}
-	Render("", ">> 영문 타자 연습 프로그램 : 짧은 글 연습 통계<<", meanSum/5, s_livetype, 0, s_acc, true); // 마지막 통계 각줄의 모든 타수 / 5 로 평균 타수 반영
+	Render("", ">> 영문 타자 연습 프로그램 : 짧은 글 연습 통계<<", meanSum/5, s_livetype, 0, s_acc, false); // 마지막 통계 각줄의 모든 타수 / 5 로 평균 타수 반영
 	char typer = getche();
 	if(typer == '\n')
 		return; 
@@ -311,8 +312,9 @@ void l_sentence()
 				continue;
 			}
 		} else if(typer == '#') { // #을 입력 받을시 반복문 탈출
+			printf("asdf");
 			break;
-		} else  if(typer == '\n') { // 엔터를 입력한 경우
+		} else if(typer == '\n') { // 엔터를 입력한 경우
 			typing_storage[index] = typer;
 			enter_count++; // 엔터 카운트 1증가
 			if(enter_count >= 5) { //엔터 카운트가 5보다 크거나 같은경우
@@ -351,8 +353,7 @@ void l_sentence()
 	Render("", ">> 영문 타자 연습 프로그램 : 긴 글 연습 통계<<", s_process, liveTypeSum / (correct + correct_tmp), 0, s_acc, true); // 마지막 통계를 띄움
 	char typer = getche();
 	if(typer == '\n')
-		return;
-
+		return; 
 }
 
 //낱말 연습 20180343 허예은 만듦.
@@ -394,7 +395,7 @@ void word()//20180343
  		}
  		else if(strcmp(typer, "###") == 0){//###입력했을때
 			 system("clear");//창 지우고
-			 print_menu();//메뉴 복귀
+			 break;//메뉴 복귀
 
  		}
 		 
@@ -412,7 +413,7 @@ void word()//20180343
 	put = getche();
 	if(put=='\n'){//엔터치면
 		system("clear");//화면 지워지고
-		return print_menu();//메뉴 돌아가기
+		return;//메뉴 돌아가기
 	}
 
 }
@@ -465,7 +466,7 @@ void place()
 		else if(put==27) //'ESC'를 입력했을 경우
 		{ 	
 			system("clear");
-			print_menu();
+			break;
 		}
 		else //랜덤으로 나오는 알파벳과 입력한 알파벳이 틀린 경우  
 		{
@@ -483,7 +484,7 @@ void place()
 				if(put==27) //'ESC'를 입력했을 경우
 				{	 	
 				system("clear");
-				print_menu();
+				break;
 				}
 			}
 			count++;
@@ -503,7 +504,7 @@ void place()
 	put=getche();
 		if(put=='\n')//엔터를 입력하면 메뉴로 복귀한다. 
 		{
-		print_menu();
+		return;
 		}
 	}
 
@@ -513,37 +514,38 @@ void place()
 void print_menu()
 {
 	int menu;
-	system("clear");
-	printf("	   >>영어 타자 연습<<		\n");
-	printf("1. 자리수 연습		2. 낱말 연습\n");
-	printf("3. 짧은글 연습		4. 긴글 연습\n");
-	printf("5. 프로그램 종료\n");
-	printf("번호를 선택하세요: ");
-	scanf("%d", &menu);
-	getchar();
-	switch(menu)
-	{
-		case 1:
-			system("clear");
-			place();
-			break;//1을 눌렀을 때 창을 지우고 자리 연습으로 가기
-		case 2:
-			system("clear");
-			word();
-			break;//2를 눌렀을 때 창을 지우고 낱말 연습으로 가기
-		case 3:
-			system("clear");
-			s_sentence();
-			break;////3을 눌렀을 때 창을 지우고 짧은 글 연습으로 가기
-		case 4:
-			system("clear");
-			l_sentence();
-			break;//4를 눌렀을 때 창을 지우고 긴 글 연습으로 가기
-		case 5:
-			system("clear");
-			exit(0);
-
-	}////5을 눌렀을 때 프로그램이 종료되고 화면이 클리어  
+	while(menu != 5) {
+		system("clear");
+		printf("	   >>영어 타자 연습<<		\n");
+		printf("1. 자리수 연습		2. 낱말 연습\n");
+		printf("3. 짧은글 연습		4. 긴글 연습\n");
+		printf("5. 프로그램 종료\n");
+		printf("번호를 선택하세요: ");
+		scanf("%d", &menu);
+		getchar();
+		switch(menu)
+		{
+			case 1:
+				system("clear");
+				place();
+				break;//1을 눌렀을 때 창을 지우고 자리 연습으로 가기
+			case 2:
+				system("clear");
+				word();
+				break;//2를 눌렀을 때 창을 지우고 낱말 연습으로 가기
+			case 3:
+				system("clear");
+				s_sentence();
+				break;////3을 눌렀을 때 창을 지우고 짧은 글 연습으로 가기
+			case 4:
+				system("clear");
+				l_sentence();
+				break;//4를 눌렀을 때 창을 지우고 긴 글 연습으로 가기
+			case 5:
+				system("clear");
+				exit(0);
+		}////5을 눌렀을 때 프로그램이 종료되고 화면이 클리어  
+	}
 }
 
 int main()
