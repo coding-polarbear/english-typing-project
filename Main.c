@@ -541,7 +541,8 @@ void print_menu()
 			break;//4를 눌렀을 때 창을 지우고 긴 글 연습으로 가기
 		case 5:
 			system("clear");
-			break;
+			exit(0);
+
 	}////5을 눌렀을 때 프로그램이 종료되고 화면이 클리어  
 }
 
