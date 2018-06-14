@@ -363,7 +363,7 @@ void word()//20180343
 		"about","all","also","and", "as","at","be","because","but","by",
 		"can","come","could","day","do","even","find","first","for","from",
 		"get","give","go","have","he","her","here","him","his","how",
-		"I","if","in","into","it","its","just","know","like","look",
+		"inside","if","in","into","it","its","just","know","like","look",
 		"make","man","many","me","more","my","new","no","not","now",
 		"of","on","one","only","or","other","our","out","people","say",
 		"see","she","so","some","take","tell","than","that","the","their",
@@ -375,44 +375,45 @@ void word()//20180343
 	float acc=100;//정확도
 	int x; 
 	char typer[]={0};//입력할 단어 배열
-	
 
 	printf("\n\n");
 
-	while(cnt<=20){//20회까지 실행
-		x = rand()%100;
+	while(cnt<20){//20회까지 실행
+		x = rand()%100;//배열 안에 들어가있는 단어 랜덤 출력
 		wordscreen(tmp[x], ">>영문 타자 연습 프로그램 : 낱말 연습<<",process,wrong,acc);//낱말연습 스크린 띄우기 함수
 		scanf("%s", typer);//입력한 단어 출력
+	
 		
 
 		if(strcmp(tmp[x],typer) == 0){//랜덤으로 돌린 단어와 입력한 단어가 일치했을 때.
  			process+=5;//진행도 증가
  			cnt++;//횟수 증가
-			acc=((((float)cnt - wrong)/cnt)*100);
+			acc=((((float)cnt - wrong)/cnt)*100);//정확도 증가
 			continue;
 
  		}
- 		else if(strcmp(typer, "###") == 0){
- 			break;
+ 		else if(strcmp(typer, "###") == 0){//###입력했을때
+			 system("clear");//창 지우고
+			 print_menu();//메뉴 복귀
 
- 		}//###입력했을때 메뉴 복귀
+ 		}
 		 
  		else {//랜덤으로 돌린단어와 입력한 단어가 틀렸을 때
- 			process+=5;
- 			wrong++;
- 			cnt++;
+ 			process+=5;//진행도 증가
+ 			wrong++;//오타수 증가
+ 			cnt++;//횟수 증가 
  		}
- 		acc=((((float)cnt - wrong)/cnt)*100);//진행도
+ 		acc=((((float)cnt - wrong)/cnt)*100);//정확도 증가 
  	}
 	
 	wordscreen("", ">> 영문 타자 연습 프로그램 : 낱말 연습 통계<<",process,wrong,acc);//통계
 	char put;
 	getche();
 	put = getche();
-	if(put=='\n'){
-		system("clear");
-		print_menu();
-	}//엔터치면 메뉴 돌아가기 
+	if(put=='\n'){//엔터치면
+		system("clear");//화면 지워지고
+		print_menu();//메뉴 돌아가기
+	}
 
 }
 
@@ -538,7 +539,7 @@ void print_menu()
 			system("clear");
 			l_sentence();
 			break;//4를 눌렀을 때 창을 지우고 긴 글 연습으로 가기
-		default:
+		case 5:
 			system("clear");
 			break;
 	}////5을 눌렀을 때 프로그램이 종료되고 화면이 클리어  
