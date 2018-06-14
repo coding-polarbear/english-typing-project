@@ -46,7 +46,7 @@ void Update(char tmp[], char typing_storge[], int s_prosess, double s_livetype, 
 	system("clear");
 	if(is_long) {
 		printf(">> 영문 타자 연습 프로그램 : 긴 글 연습 <<\n\n");
-		printf("현재타수: %0.f%% 정확도: %d \n\n",s_livetype, s_acc);
+		printf("정확도: %d 현재타수: %0.f \n\n",s_acc, s_livetype);
 	} else {
 		printf(">> 영문 타자 연습 프로그램 : 짧은글 연습 <<\n");
 		printf("진행도: %d%% 현재타수: %0.f 최고타수: %0.f 정확도: %d%% \n\n", s_prosess, s_livetype, besttype, s_acc);
@@ -70,7 +70,7 @@ void Render(char tmp[], char title[], int s_prosess, double s_livetype, double b
 	printf("%s\n", title);
 	printf("\n");
 	if(is_long) {
-		printf("정확도: %d% 현재타수: %0.f \n\n", s_acc, s_livetype);
+		printf("정확도: %d%% 현재타수: %0.f \n\n", s_acc, s_livetype);
 	} else {
 		printf("진행도: %d%% 현재타수: %0.f 최고타수: %0.f 정확도: %d%% \n\n", s_prosess, s_livetype, besttype, s_acc);
 	}
@@ -321,6 +321,11 @@ void l_sentence()
 			typing_storage[index] = typer;
 			enter_count++; // 엔터 카운트 1증가
 			if(enter_count >= 5) { //엔터 카운트가 5보다 크거나 같은경우
+				correct_tmp += correct;
+				if(page == 1)
+				{
+					break;
+				}
 				enter_count = 0; // 엔터 카운트 초기화
 				index = 0; // index초기화
 				correct = 0; // 맞은 개수 초기화
@@ -329,8 +334,6 @@ void l_sentence()
 					s_acc = 0; // 정확도 0으로 초기화
 					page++; // 페이지를 증가시켜서  한장 넘김
 					Render(tmp[random_choice][page], ">> 영문 타자 연습 프로그램 : 긴 글 연습 <<", s_process, s_livetype, 0, s_acc, true); // 넘겨진 페이지로 새로 랜더링
-				} else { // 카운트가 5가 넘었는데 마지막 페이지 인경우 반복문 탈출
-					break;
 				}
 				Render(tmp[random_choice][page], ">> 영문 타자 연습 프로그램 : 긴 글 연습 <<", s_process, s_livetype, 0, s_acc, true);
 			} else {
