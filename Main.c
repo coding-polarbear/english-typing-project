@@ -69,6 +69,7 @@ void Render(char tmp[], char title[], int s_prosess, double s_livetype, double b
 	system("clear");
 	printf("%s\n", title);
 	printf("\n");
+	printf("%d \n", s_acc);
 	if(is_long) {
 		printf("정확도: %d%% 현재타수: %0.f \n\n", s_acc, s_livetype);
 	} else {
@@ -164,7 +165,6 @@ void s_sentence()
 			random_choice = rand() % 30; // 새롭게 글을 불러오기 위해 0 ~ 30 사이의 수를 랜덤하게 생성
 			index = 0; //입력한 글자 수 초기화
 			correct = 0; //맞은 글자 수 초기화
-			s_acc = 0; //정확도 초기화
 			s_prosess += 20; //진행도 20 증가
 			Render(tmp[random_choice], ">> 영문 타자 연습 프로그램 : 짧은 글 연습 <<", s_prosess, s_livetype, besttype, s_acc, false); // 새로 렌더링
 		}
@@ -205,6 +205,7 @@ void s_sentence()
 			Update(tmp[random_choice], typing_storge, s_prosess, s_livetype, besttype, s_acc, index, false); //바뀐 정보 업데이트
 		}
 	}
+
 	Render("", ">> 영문 타자 연습 프로그램 : 짧은 글 연습 통계<<", s_prosess, meanSum/5, besttype, s_acc, false); // 마지막 통계 각줄의 모든 타수 / 5 로 평균 타수 반영
 	char typer = getche();
 	if(typer == '\n')
