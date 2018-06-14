@@ -206,7 +206,7 @@ void s_sentence()
 		}
 	}
 
-	Render("", ">> 영문 타자 연습 프로그램 : 짧은 글 연습 통계<<", s_prosess, meanSum/5, besttype, s_acc, false); // 마지막 통계 각줄의 모든 타수 / 5 로 평균 타수 반영
+	Render("", ">> 영문 타자 연습 프로그램 : 짧은 글 연습 통계<<", s_prosess, (double)meanSum/5, besttype, s_acc, false); // 마지막 통계 각줄의 모든 타수 / 5 로 평균 타수 반영
 	char typer = getche();
 	if(typer == '\n')
 		return; 
