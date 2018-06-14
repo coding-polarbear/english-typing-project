@@ -412,7 +412,7 @@ void word()//20180343
 	put = getche();
 	if(put=='\n'){//엔터치면
 		system("clear");//화면 지워지고
-		print_menu();//메뉴 돌아가기
+		return print_menu();//메뉴 돌아가기
 	}
 
 }
