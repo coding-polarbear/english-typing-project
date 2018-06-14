@@ -69,7 +69,6 @@ void Render(char tmp[], char title[], int s_prosess, double s_livetype, double b
 	system("clear");
 	printf("%s\n", title);
 	printf("\n");
-	printf("%d \n", s_acc);
 	if(is_long) {
 		printf("정확도: %d%% 현재타수: %0.f \n\n", s_acc, s_livetype);
 	} else {
