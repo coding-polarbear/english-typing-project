@@ -14,3 +14,7 @@
 ![메인 화면](http://purplebeen.kr/images/스크린샷%202018-06-08%20오전%2011.49.44.png)
 
 ![긴글 연습](http://purplebeen.kr/images/스크린샷%202018-06-08%20오전%2011.50.10.png)
+
+![낱말 연습](http://purplebeen.kr/images/%EB%82%B1%EB%A7%90.PNG)
+
+![자리연습](http://purplebeen.kr/images/%EB%82%B1%EB%A7%90.PNG)
