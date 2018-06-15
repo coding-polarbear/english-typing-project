@@ -440,7 +440,7 @@ void place()
 	while(count<20)//총 맞은 횟수가 20회가 될때 까지 실행 
 	{
 		system("clear");
-	  	printf ("자리연습 \n");
+	  	printf (">> 영문 타자 연습 프로그램 : 자리 연습 <<\n");
 	  	printf("진행도:%d%%  오타수:%d  정확도:%.1f%% ",process,error,exact);
 	  	printf("\n\n");
 
@@ -483,7 +483,7 @@ void place()
 				totalchallenge++;
 				exact=(float)count/(totalchallenge-1)*100;
 				system("clear");
-				printf ("자리연습 \n");
+				printf (">> 영문 타자 연습 프로그램 : 자리 연습 <<\n");
 				printf("진행도:%d%%  오타수:%d  정확도:%.1f%% ",process,error,exact);
 				printf("\n\n");
 				printf("%c\n",putalphabet);
@@ -524,7 +524,7 @@ void print_menu()
 	while(menu != 5) {
 		system("clear");
 		printf("	   >>영어 타자 연습<<		\n");
-		printf("1. 자리수 연습		2. 낱말 연습\n");
+		printf("1. 자리 연습		2. 낱말 연습\n");
 		printf("3. 짧은글 연습		4. 긴글 연습\n");
 		printf("5. 프로그램 종료\n");
 		printf("번호를 선택하세요: ");
