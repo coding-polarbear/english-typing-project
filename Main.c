@@ -504,7 +504,7 @@ void place()
 	 if(count==20)//20번째가 되었을때 통계를 보여준다
  	{
    	system("clear");
-   	printf (">> 영문 타자 연습 프로그램 : 자리 연습 통계 \n");
+   	printf (">> 영문 타자 연습 프로그램 : 자리 연습 통계 <<\n");
   	printf("진행도:%d%%  오타수:%d  정확도:%.1f%% ",process,error,exact);
 	printf("\n");
 	char put;
