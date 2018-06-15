@@ -279,7 +279,7 @@ void l_sentence()
 	int random_choice = rand() % 4; // 무작위로 긴글을 뽑기위한 랜덤
 	Render(tmp[random_choice][page], ">> 영문 타자 연습 프로그램 : 긴 글 연습 <<",s_process, 0, 0, 0, true); // 초기화면 렌더링
 
-	double s_livetype = 0; // 현재 타수
+	double s_livetype = 0, acc_Mean = 0; // 현재 타수
 	time_t startTime, endTime; // 시작 시간, 입력 받은시간
 	
 	startTime = time(NULL); // 맨처음 랜더 함수와 함깨 시작 시간을 받아옴
@@ -331,6 +331,7 @@ void l_sentence()
 				correct = 0; // 맞은 개수 초기화
 				if(page == 0) { // 첫번째 페이지 인경우
 					startTime = time(NULL); // 시작 시간을 다시 받아옴
+					acc_Mean += s_acc;
 					s_acc = 0; // 정확도 0으로 초기화
 					page++; // 페이지를 증가시켜서  한장 넘김
 					Render(tmp[random_choice][page], ">> 영문 타자 연습 프로그램 : 긴 글 연습 <<", s_process, s_livetype, 0, s_acc, true); // 넘겨진 페이지로 새로 랜더링
@@ -359,11 +360,11 @@ void l_sentence()
 	}
 	if (liveTypeSum == 0)
 	{
-		Render("", ">> 영문 타자 연습 프로그램 : 긴 글 연습 통계<<", s_process, liveTypeSum, besttype, s_acc, true); // 마지막 통계를 띄움
+		Render("", ">> 영문 타자 연습 프로그램 : 긴 글 연습 통계<<", s_process, liveTypeSum, besttype, (acc_Mean + s_acc)/2, true); // 마지막 통계를 띄움
 	}
 	else
 	{
-		Render("", ">> 영문 타자 연습 프로그램 : 긴 글 연습 통계<<", s_process, liveTypeSum / (correct + correct_tmp), besttype, s_acc, true); // 마지막 통계를 띄움
+		Render("", ">> 영문 타자 연습 프로그램 : 긴 글 연습 통계<<", s_process, liveTypeSum / (correct + correct_tmp), besttype, (acc_Mean + s_acc)/2, true); // 마지막 통계를 띄움
 	}
 	char typer = getche();
 	if(typer == '\n')
